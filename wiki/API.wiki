@@ -57,7 +57,11 @@ The API returns an array of comment objects with the parts extracted into distin
 
 === Scores ===
 
-Each URL may have a collection of _comments_ associated with it, as well as
+Each URL has a collection of _scores_ associated with it, that represent a time-weighted sum of the total user activity surrounding each URL.
+
+{{{
+
+}}}
 
 == Methods ==
 
