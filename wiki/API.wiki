@@ -63,6 +63,8 @@ Each URL has a collection of _scores_ associated with it, that represent a time-
   * Comment on a URL: 2 points
   * View a URL: 1 point
 
+For example, a URL that was shared onced and viewed once would have immediately have the following scores:
+
 {{{
 {day: 0.1138,
  week: 0.0164,
