@@ -100,3 +100,20 @@ Test({"status": "OK",
 }}}
 
 http://g02.me/comment/?id=G&comment=test:This%20is%20a%20test%20comment%20%5Bsearch%2C%20engine%5D&callback=Test
+{{{
+Test({"status": "OK",
+  "created": new Date("10/16/2008 22:19 GMT"),
+  "url": "http://www.google.com/",
+  "title": "Google",
+  "comments": [
+    {"comment": "The mighty search engine...", "user": "mckoss"},
+    {"comment": "I like Google"},
+    {"comment": "This is test of tags", "user": "mckoss", "tags": "search engine,search"},
+    {"comment": "test comment", "user": "mckoss"},
+    {"comment": "this is another comment via REST call"},
+    {"comment": "This is a test comment", "user": "test", "tags": "search,engine"}
+  ],
+  "shared": 7,
+  "id": "G",
+  "viewed": 66});
+}}}
