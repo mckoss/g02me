@@ -38,7 +38,8 @@ Each URL has the following information that can be retrieved about it:
   * title: The page title
   * viewed: Total number of times the G02.ME URL has been accesssed/viewed
   * shared: Total number of times users have shared this URL (mapped the full URL to it's shortcut).
-  * scores: An array of time-weighted scores based on the total activity surrounding the URL. 
+  * scores: A collection of time-weighted scores based on the total activity surrounding the URL.
+  * comments: A collection of user comments about the shared URL.
 
 === Scores ===
 
