@@ -1,6 +1,4 @@
 #labels Featured
-# G02.ME JSON API
-
 = Introduction =
 
 Most G02.ME functionality is available to programmers through a JSON/Javascript API.  Most of the URL's that are supported by the user-interface have a JSON-equivalent request.
