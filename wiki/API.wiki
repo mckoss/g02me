@@ -33,13 +33,12 @@ G02.ME stored shorted URL's and collects analytics information about user intera
 
 Each URL has the following information that can be retrieved about it:
 
-* url: The _long_ URL
-* id: The base-645 identifier for the shortened URL
-* title: The page title
-* viewed: Total number of times the G02.ME URL has been accesssed/viewed
-* shared: Total number of times users have shared this URL (mapped the full URL to it's shortcut).
-* scores: An array of time-weighted scores based on the total activity surrounding the URL.
-* 
+  * url: The _long_ URL
+  * id: The base-645 identifier for the shortened URL
+  * title: The page title
+  * viewed: Total number of times the G02.ME URL has been accesssed/viewed
+  * shared: Total number of times users have shared this URL (mapped the full URL to it's shortcut).
+  * scores: An array of time-weighted scores based on the total activity surrounding the URL. 
 
 === Scores ===
 
