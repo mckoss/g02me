@@ -62,7 +62,7 @@ Each URL may have a collection of _comments_ associated with it, as well as
 || URL || Description ||
 || /info/id || Retrieve information about a shortened URL id. ||
 || /map/?url=...&title=... || Generate a shorted URL from a long one. ||
-|| /comment/?id=xxx
+|| /comment/?id=xxx&comment=text-string || Add a comment to the URL with id, xxx ||
 
 == Examples ==
 
