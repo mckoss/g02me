@@ -64,10 +64,10 @@ Each URL has a collection of _scores_ associated with it, that represent a time-
   * View a URL: 1 point
 
 {{{
-{day: 3.14016974889,
- week: 3.14016974889,
- month: 0.111732742267,
- year: 0.0115816340904
+{day: 0.1138,
+ week: 0.0164,
+ month: 0.0037,
+ year: 0.0026
 }
 }}}
 
