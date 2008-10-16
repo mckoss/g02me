@@ -82,3 +82,15 @@ Test({"status": "OK",
 }}}
 
 http://g02.me/map/?url=http://code.google.com/p/g02me/wiki/API&title=Edit%20API-g02me&callback=Test
+{{{
+Test({"status": "OK",
+  "created": new Date("10/16/2008 21:57 GMT"),
+  "url": "http://code.google.com/p/g02me/wiki/API",
+  "title": "API - g02me - Google Code",
+  "comments": [
+    {"comment": "I working on the JSON API docs now...", "user": "mckoss"}
+  ],
+  "shared": 3,
+  "id": "1g",
+  "viewed": 3});
+}}}
