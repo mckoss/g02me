@@ -29,5 +29,22 @@ function MyCallback(obj)
 
 == Methods ==
 
-|| URL || Example || Notes ||
-|| /N || [http://g02.me/G?callback=Test Example] || Retrieve information about a shorted URL, N ||
+|| URL || Description || Notes ||
+|| /N || Retrieve information about a shorted URL, N || 
+
+== Examples ==
+
+http://g02.me/G?callback=Test
+{{{
+Test({"status": "OK",
+  "created": new Date("10/16/2008 15:35 GMT"),
+  "url": "http://www.google.com/",
+  "title": "Google",
+  "comments": [
+    {"comment": "The mighty search engine...", "user": "mckoss"},
+    {"comment": "I like Google"}
+    ],
+  "shared": 7,
+  "id": "G",
+  "viewed": 48});
+}}}
