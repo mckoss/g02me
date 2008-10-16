@@ -80,3 +80,5 @@ Test({"status": "OK",
   "id": "G",
   "viewed": 48});
 }}}
+
+http://g02.me/map/?url=http://code.google.com/p/g02me/wiki/API&title=Edit%20API-g02me&callback=Test
