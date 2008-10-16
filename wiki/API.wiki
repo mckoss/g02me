@@ -57,11 +57,21 @@ The API returns an array of comment objects with the parts extracted into distin
 
 === Scores ===
 
-Each URL has a collection of _scores_ associated with it, that represent a time-weighted sum of the total user activity surrounding each URL.
+Each URL has a collection of _scores_ associated with it, that represent a time-weighted sum of the total user activity surrounding each URL.  Scores are average hourly rates over the given time period that represent the sum of scores for various user actions:
+
+  * Share a URL: 3 points
+  * Comment on a URL: 2 points
+  * View a URL: 1 point
 
 {{{
-
+{day: 3.14016974889,
+ week: 3.14016974889,
+ month: 0.111732742267,
+ year: 0.0115816340904
+}
 }}}
+
+Over time, without additional activity, the scores will be reduced by a factor or 2 (two) over each time period (the _half life_).
 
 == Methods ==
 
