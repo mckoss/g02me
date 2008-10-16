@@ -31,6 +31,8 @@ function MyCallback(obj)
 
 G02.ME stored shorted URL's and collects analytics information about user interactions with those shortened URL's.  Each shortened URL is assigned an _id_ (which is encoded as a base-64 number using the digits, letters and the characters "-" and "_").
 
+=== URL Format ===
+
 Each URL has the following information that can be retrieved about it:
 
   * url: The _long_ URL
