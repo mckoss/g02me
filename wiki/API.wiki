@@ -1,0 +1,30 @@
+#labels Featured
+# G02.ME JSON API
+
+= Introduction =
+
+Most G02.ME functionality is available to programmers through a JSON/Javascript API.  Most of the URL's that are supported by the user-interface have a JSON-equivalent request.
+
+All requests are of the form:
+
+{{{
+http://g02.me/...?callback=MyCallback
+}}}
+
+to which the response will look like:
+
+{{{
+MyCallback({status:"OK", ...});
+}}}
+
+Static requests can be inserted in a web page via:
+
+{{{
+<script>
+function MyCallback(obj)
+{
+    ... your code here ...
+}
+</script>
+<script src="http://g02.me/...?callback=MyCallback"></script>
+}}}
