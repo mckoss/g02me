@@ -98,3 +98,5 @@ Test({"status": "OK",
   "id": "1g",
   "viewed": 3});
 }}}
+
+http://g02.me/comment/?id=G&comment=test:This is a test comment [search, engine]
