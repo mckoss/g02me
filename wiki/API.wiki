@@ -41,6 +41,18 @@ Each URL has the following information that can be retrieved about it:
   * scores: A collection of time-weighted scores based on the total activity surrounding the URL.
   * comments: A collection of user comments about the shared URL.
 
+=== Comments ===
+
+Comments are entered in the API (and user interface) as a formatted string:
+
+  username: comment string [tag1, tag2]
+
+The API returns an array of comment objects with the parts extracted into distinct properties:
+
+  * comment: The text portion of the comment string
+  * user: The user name associated with the comment
+  * tags: A comma separated list of tags
+
 === Scores ===
 
 Each URL may have a collection of _comments_ associated with it, as well as
