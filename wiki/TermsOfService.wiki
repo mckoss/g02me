@@ -29,7 +29,7 @@
 
 == Content ==
 
-  * "Content" is defined as any explicit and implicit information provided to the Service.
+  * "Content" is defined as any explicit and implicit information provided to the Service in conjunction with your use of the Service.
   * You understand that all Content to which you may have access through use of the Service is the sole responsibility of the person from which that Content originated.
   * !StartPad may, at it's sole discretion, remove any Content from the Service, without prior notice.
   * You agree !StartPad has no responsibility or liability for the deletion or failure to store any Content you provide to the Service.
