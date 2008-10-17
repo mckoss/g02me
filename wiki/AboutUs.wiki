@@ -2,7 +2,7 @@
 
 G02.ME was started as a Google Hack-a-Thon project in Seattle in August, 2008 by Mike Koss.
 
-This is my second !AppEngine project, but the first to be released (the other one being a closed-source project, [http://pageforest.com PageForest]).
+This is my second !AppEngine project, but the first to be released (the other one being a JavaScript application platform, [http://pageforest.com PageForest]).
 
 G02.ME combines the functionality of a URL-shortening service, we other social bookmarking features that have interested me (social ranking, community commenting, and feedback).  I was also interested in experimenting with very light-weight interfaces, and particular "command-line" style text interfaces for attributing comments to users, and adding tags.
 
