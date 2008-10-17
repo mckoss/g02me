@@ -5,6 +5,7 @@
   # This agreement is between you, the user of the G02.ME web site (the Service), and [http://startpad.org StartPad], 811 First Ave Seattle, Suite 480, WA, 98104 ("!StartPad").
   # In order to use the Service, you must agree to these Terms of Service.
   # You must be 13 years or older to use the Service.
+  # !StartPad may terminate your use of the Service at any time, if, at the sole discretion of !StartPad, you have violated the terms of this agreement.
   # !StartPad reserves the right to change this agreement without prior notice.
 
 == Account ==
@@ -13,13 +14,14 @@
   # If you do create an account (register), you must provide correct contact (email) information so we can get in touch with you about your use of the service.
   # You agree not to try to access the administrative features of the Service without authorization.
   # You agree not to attempt to impersonate or otherwise use the Service on behalf of another user without their prior knowledge and consent.
+  # You agree not to attempt to deny access or disrupt the use of the Service by any other user.
 
 == Privacy Policy ==
 
   # The [http://code.google.com/appengine/privacy.html Google App Engine Privacy Policy] and [http://www.google.com/privacypolicy.html Google Privacy Policy] is included by reference in this agreement.
-  # !StartPad will have access to your username and email address if you register with the Service.
+  # !StartPad will have access to your user name and email address if you register with the Service.
   # !StartPad will have access to all information provided by you to the service.
-  # When !StartPad collects email addresses, IP addresses, or personal passwords in conjuction with the use of the Service, it will not disclose this information with any 3rd party without your prior consent.
+  # When !StartPad collects email addresses, IP addresses, or personal passwords in conjunction with the use of the Service, it will not disclose this information with any 3rd party without your prior consent.
 
 == Fees ==
 
@@ -39,9 +41,13 @@
 
 == License from You ==
 
-  # By providing content to the Service, you give StartPad a worldwide, royalty-free, and non-exclusive license to reproduce, adapt, modify, translate, publish, publicly display and distribute such Content for the purpose of enabling StartPad to provide you with the Service in accordance with its privacy policy.
+  # By providing content to the Service, you give !StartPad a worldwide, royalty-free, and non-exclusive license to reproduce, adapt, modify, translate, publish, publicly display and distribute such Content for the purpose of enabling !StartPad to provide you with the Service in accordance with its privacy policy.
 
 == Exclusion of Warranties ==
 
   # The Service is provided without warranty or liability for losses which may be incurred by you in conjunction with your use of the Service.
   # You agree that your use of the Service is at your sole risk and is provided to you "as is" and "as available".
+
+== Limitation of Liability ==
+
+  # You agree that !StartPad shall not be liable to you for any damages which may be incurred by you in conjunction with the use of the Service.
