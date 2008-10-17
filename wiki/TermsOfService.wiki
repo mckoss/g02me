@@ -24,8 +24,6 @@
   # The Service is provided to you without charge.
   # The Service reserves the right to change the fee and payment policy at any time.
 
-== Con
-
 == Exclusion of Warranties ==
 
   # The Service is provided without warranty or liability for losses which may be incurred by you in conjunction with your use of the Service.
