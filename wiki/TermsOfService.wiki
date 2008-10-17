@@ -27,7 +27,13 @@
 
 == Content ==
 
-  # 
+  # You understand that all content to which you may have access through use of the Service is the sole responsibility of the person from which that content originated.
+  # StartPad may, at it's sole discretion, remove any content from the Service, without prior notice.
+  # You agree StartPad has no responsibility or liability for the deletion or failure to store any content you provide to the Service.
+
+== Proprietary Rights ==
+
+  # Your rights to use the software used in the Service are granted by the attached [License]
 
 == Exclusion of Warranties ==
 
