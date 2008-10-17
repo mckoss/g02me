@@ -21,7 +21,9 @@
 
 == Fees ==
 
-  # The Service
+  # The Service is provided to you without charge.
+  # The Service reserves the right offer some services on a paid-fee basis.
+  # The Service reserves the right to change the fee and payment policy at any time.
 
 == Exclusion of Warranties ==
 
