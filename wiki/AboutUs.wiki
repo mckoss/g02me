@@ -1,4 +1,6 @@
+#summary About Us landing page from g02.me
 #labels Featured
+
 G02.ME was started as a Google Hack-a-Thon project in Seattle in August, 2008 by Mike Koss.
 
 This is my second AppEngine project, but the first to be released (the other one being a closed-source project, [http://pageforest.com PageForest]).
