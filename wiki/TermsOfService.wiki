@@ -40,7 +40,7 @@
 
 == License from You ==
 
-  * By providing content to the Service, you give !StartPad a worldwide, royalty-free, and non-exclusive license to reproduce, adapt, modify, translate, publish, publicly display and distribute such Content for the purpose of enabling !StartPad to provide you with the Service in accordance with its privacy policy.
+  * By providing Content to the Service, you give !StartPad a worldwide, royalty-free, and non-exclusive license to reproduce, adapt, modify, translate, publish, publicly display and distribute such Content for the purpose of enabling !StartPad to provide you with the Service in accordance with its privacy policy.
 
 == Exclusion of Warranties ==
 
