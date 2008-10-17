@@ -2,9 +2,10 @@
 
 == Agreement ==
 
+  # This agreement is between you, the user of the G02.ME web site, and [http://startpad.org StartPad], 811 First Ave Seattle, WA, 98104 ("StartPad").
   # In order to use g02.me (the Service), you must agree to these Terms of Service.
   # You must be 13 years or older to use the Service.
-  # g02.me reserves the right to change this agreement without prior notice.
+  # StartPad reserves the right to change this agreement without prior notice.
 
 == Account ==
 
@@ -16,13 +17,17 @@
 == Privacy Policy ==
 
   # The [http://code.google.com/appengine/privacy.html Google App Engine Privacy Policy] is included by reference in this agreement.
-  # The Service will have access to your username and email address if you register with the Service.
-  # The Service will have access to all information provided by you to the service.
+  # StartPad will have access to your username and email address if you register with the Service.
+  # StartPad will have access to all information provided by you to the service.
 
 == Fees ==
 
   # The Service is provided to you without charge.
-  # The Service reserves the right to change the fee and payment policy at any time.
+  # StartPad reserves the right to change the fee and payment policy at any time.
+
+== Content ==
+
+  # 
 
 == Exclusion of Warranties ==
 
