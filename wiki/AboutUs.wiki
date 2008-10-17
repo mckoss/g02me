@@ -1,5 +1,4 @@
 #summary About Us landing page from g02.me
-#labels Featured
 
 G02.ME was started as a Google Hack-a-Thon project in Seattle in August, 2008 by Mike Koss.
 
