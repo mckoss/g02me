@@ -1,4 +1,4 @@
-#Terms of Service for the [http://g02.me G02.ME] hosted web service.
+#summary Terms of Service for the [http://g02.me G02.ME] hosted web service.
 
 == Agreement ==
 
@@ -6,4 +6,3 @@
  * You must be 13 years or older to use the Service.
 
 == Account ==
-
