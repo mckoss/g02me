@@ -2,8 +2,8 @@
 
 == Agreement ==
 
-  # This agreement is between you, the user of the G02.ME web site, and [http://startpad.org StartPad], 811 First Ave Seattle, WA, 98104 ("!StartPad").
-  # In order to use g02.me (the Service), you must agree to these Terms of Service.
+  # This agreement is between you, the user of the G02.ME web site (the Service), and [http://startpad.org StartPad], 811 First Ave Seattle, WA, 98104 ("!StartPad").
+  # In order to use the Service, you must agree to these Terms of Service.
   # You must be 13 years or older to use the Service.
   # !StartPad reserves the right to change this agreement without prior notice.
 
