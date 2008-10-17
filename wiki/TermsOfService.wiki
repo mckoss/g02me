@@ -26,7 +26,6 @@
 == Fees ==
 
   * The Service is provided to you without charge.
-  * !StartPad reserves the right to change the fee and payment policy at any time.
 
 == Content ==
 
