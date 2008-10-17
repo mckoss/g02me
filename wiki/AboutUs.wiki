@@ -7,6 +7,6 @@ This is my second !AppEngine project, but the first to be released (the other on
 
 G02.ME combines the functionality of a URL-shortening service, we other social bookmarking features that have interested me (social ranking, community commenting, and feedback).  I was also interested in experimenting with very light-weight interfaces, and particular "command-line" style text interfaces for attributing comments to users, and adding tags.
 
-I have been developing software since 1983, at Microsoft (Excel, Outlook, !SharePoint).  In 2002 I left Microsoft to join the startup community in Seattle, working at Faves.com, and starting the software development co-working space, [http://startpad.org !StartPad].
+I have been developing software since 1983, at Microsoft (Excel, Outlook, !SharePoint).  In 2002 I left Microsoft to join the startup community in Seattle, working at Faves.com, and starting the software development co-working space, [http://startpad.org StartPad].
 
 <wiki:gadget url="http://www.ohloh.net/projects/g02me/widgets/project_basic_stats.xml" height="220" border="1" />
