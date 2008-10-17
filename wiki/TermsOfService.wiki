@@ -6,3 +6,10 @@
  * You must be 13 years or older to use the Service.
 
 == Account ==
+
+ * You may use the Service anonymously.
+ * If you do create an account (register), you must provide correct contact (email) information so we can get in touch with you about your use of the service.
+ * You agree not to try to access the administrative features of the Service w/o authorization.
+ * You agree not to attempt to impersonate or otherwise use the Service on behalf of another user without their prior knowledge and consent.
+
+== Privacy ==
