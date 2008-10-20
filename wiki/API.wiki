@@ -86,7 +86,7 @@ The value of the 'status' property of the returned JSON object can be one of:
 
 || *Code* || *Description* ||
 || Fail || Generic failure ||
-|| Fail/NotFound || Object was not found/does not exist ||
+|| Fail/!NotFound || Object was not found/does not exist ||
 || Fail/Domain || Attempt to create a shortened URL for a forbidden domain ||
 
 == Methods ==
