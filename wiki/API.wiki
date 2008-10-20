@@ -90,6 +90,8 @@ The value of the 'status' property of the returned JSON object can be one of:
 || Fail/!NotFound || Object was not found/does not exist ||
 || Fail/Domain || Attempt to create a shortened URL for a forbidden domain ||
 
+When a Failure status code is returned, the property, 'message', may contain a human readable explanation of the error.
+
 == Methods ==
 
 || *URL* || *Description* || *Returns* ||
