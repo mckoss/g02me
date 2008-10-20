@@ -90,8 +90,33 @@ Over time, without additional activity, the scores will be reduced by a factor o
 || /info/id || Retrieve information about a shortened URL id. ||
 || /map/?url=...&title=... || Generate a shorted URL from a long one. ||
 || /comment/?id=xxx&comment=text-string || Add a comment to the URL with id, xxx ||
+|| /comment/delete?id=xxx || Remove the comment with comment id, xxx ||
 
 == Examples ==
+
+http://g02.me/?callback=Test
+
+Results:
+{{{
+Test({"popular": [
+    {"created": new Date("10/19/2008  1: 3 GMT"),
+     "url": "http://www.google.com/",
+     "title": "Google",
+     "comments": [
+      {"comment": "Good point - I do need to add a session key, I think",
+       "cid": 2429, "user": "mckoss", "created": new Date("10/20/2008  4:41 GMT")},
+      ...
+      ],
+     "scores": {
+      "week": 1.0347861977813146, "year": 0.02562912538964475,
+      "day": 4.1392126989301516, "month": 0.26946271753682216},
+     "shared": 12,
+     "id": "G",
+     "viewed": 180},
+     ...
+     ],
+    "status": "OK"});
+}}}
 
 http://g02.me/info/G?callback=Test
 
