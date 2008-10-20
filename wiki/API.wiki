@@ -77,9 +77,16 @@ For example, a URL that was shared onced and viewed once would have immediately 
 
 Over time, without additional activity, the scores will be reduced by a factor or 2 (two) over each time period (the _half life_).
 
+== Error Codes ==
+
+|| *Code* || *Description* ||
+|| Fail || Generic failure ||
+|| Fail/Domain || Attempt to create a shortened URL for a forbidden domain ||
+
 == Methods ==
 
-|| URL || Description ||
+|| *URL* || *Description* ||
+|| / || Retrieve the set of (100) most popular urls ||
 || /info/id || Retrieve information about a shortened URL id. ||
 || /map/?url=...&title=... || Generate a shorted URL from a long one. ||
 || /comment/?id=xxx&comment=text-string || Add a comment to the URL with id, xxx ||
