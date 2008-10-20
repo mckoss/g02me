@@ -206,3 +206,11 @@ Test({"status": "OK",
   "id": "G",
   "viewed": 182});
 }}}
+
+http://localhost:8080/comment/delete?cid=555&callback=Test
+
+Results:
+{{{
+Test({"status": "Fail/NotFound",
+  "message": "Comment id=555 does not exists"});
+}}}
