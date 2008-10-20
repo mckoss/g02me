@@ -80,10 +80,13 @@ For example, a URL that was shared onced and viewed once would have immediately 
 
 Over time, without additional activity, the scores will be reduced by a factor or 2 (two) over each time period (the _half life_).
 
-== Error Codes ==
+== Status Codes ==
+
+The value of the 'status' property of the returned JSON object can be one of:
 
 || *Code* || *Description* ||
 || Fail || Generic failure ||
+|| Fail/NotFound || Object was not found/does not exist ||
 || Fail/Domain || Attempt to create a shortened URL for a forbidden domain ||
 
 == Methods ==
