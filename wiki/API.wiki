@@ -33,13 +33,14 @@ function MyCallback(obj)
 
 G02.ME stored shorted URL's and collects analytics information about user interactions with those shortened URL's.  Each shortened URL is assigned an _id_ (which is encoded as a base-64 number using the digits, letters and the characters "-" and "_").
 
-=== URL Format ===
+=== UR Info Format ===
 
 Each URL has the following information that can be retrieved about it:
 
   * url: The _long_ URL
   * id: The base-64 identifier for the shortened URL
   * title: The page title
+  * created: Date url was first shortened
   * viewed: Total number of times the G02.ME URL has been accesssed/viewed
   * shared: Total number of times users have shared this URL (mapped the full URL to it's shortcut).
   * scores: A collection of time-weighted scores based on the total activity surrounding the URL.
@@ -54,8 +55,10 @@ Comments are entered in the API (and user interface) as a formatted string:
 The API returns an array of comment objects with the parts extracted into distinct properties:
 
   * comment: The text portion of the comment string
-  * user: The user name associated with the comment
+  * user: The user name associated with the comment (or id number if anonymous)
   * tags: A comma separated list of tags
+  * created: Date comment was created
+  * cid: Globally unique id for the comment
 
 === Scores ===
 
