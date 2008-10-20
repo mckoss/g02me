@@ -123,15 +123,19 @@ http://g02.me/map/?url=http://code.google.com/p/g02me/wiki/API&title=Edit%20API-
 Results:
 {{{
 Test({"status": "OK",
-  "created": new Date("10/16/2008 21:57 GMT"),
+  "created": new Date("10/18/2008 16:26 GMT"),
   "url": "http://code.google.com/p/g02me/wiki/API",
   "title": "API - g02me - Google Code",
   "comments": [
-    {"comment": "I working on the JSON API docs now...", "user": "mckoss"}
-  ],
-  "shared": 3,
+    {"comment": "First draft complete",
+     "cid": 2162, "user": "mckoss", "created": new Date("10/16/2008 22:49 GMT")}
+    ],
+  "scores": {
+    "week": 0.17224015091477538, "month": 0.045440163041166333,
+    "day": 0.64928537808244025, "year": 0.0061774940162845062},
+  "shared": 5,
   "id": "1g",
-  "viewed": 3});
+  "viewed": 25});
 }}}
 
 http://g02.me/comment/?id=G&comment=test:This%20is%20a%20test%20comment%20%5Bsearch%2C%20engine%5D&callback=Test
