@@ -38,7 +38,7 @@ G02.ME stores shortened URL's and collects analytics information about user inte
 Each URL has the following information that can be retrieved about it:
 
   * url: The _long_ URL
-  * id: The base-64 identifier for the shortened URL
+  * id: The base-57 identifier for the shortened URL
   * title: The page title
   * created: Date url was first shortened
   * viewed: Total number of times the G02.ME URL has been accesssed/viewed
