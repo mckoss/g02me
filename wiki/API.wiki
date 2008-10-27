@@ -99,7 +99,7 @@ When a Failure status code is returned, the property, 'message', may contain a h
 || /info/id || Retrieve information about a shortened URL id. || url_info ||
 || /map/?url=...&title=... || Generate a shorted URL from a long one. || url_info ||
 || /comment/?id=xxx&comment=text-string || Add a comment to the URL with id, xxx || url_info ||
-|| /comment/delete?id=xxx || Remove the comment with comment id, xxx || url_info ||
+|| /comment/delete?cid=xxx || Remove the comment with comment id, xxx || url_info ||
 
 == Examples ==
 
