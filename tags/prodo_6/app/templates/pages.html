@@ -1,0 +1,44 @@
+{% extends "master.html" %}
+
+{% block script %}
+var txtUsername;
+
+function Loaded()
+{
+	txtUsername = document.getElementById('username');
+	if (!txtUsername)
+		return;
+
+	txtUsername.focus();
+	G02.AddEventFn(txtUsername, "keydown", KeyDown);
+}
+
+function KeyDown(evt)
+{
+	if (evt.keyCode == 13)
+		G02.SetUsername(txtUsername.value);
+}
+{% endblock %}
+
+{% block body %}
+<div class="page">
+<div class="heading">
+{% if username %}
+	Welcome <a href="/user/{{username}}" title="{{username}}'s activity">{{username}}</a> |
+	<a href="javascript:G02.SetUsername('');">Sign out</a>
+{% else %}
+	<div id="sign-in">
+	    <label for="username">Nickname: </label>
+	    <input style="width:70px;" type="text" id="username" name="username"/>
+		<input onclick="G02.SetUsername(txtUsername.value);" style="width:70px;" type="button" value="Claim It"/>
+	</div>
+{% endif %}
+</div>
+
+{% block pagebody %}
+{% endblock %}
+
+<div class="timer"><span>Elapsed time: {{elapsed}}s</span></div>
+
+</div>
+{% endblock %}

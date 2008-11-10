@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /comment/
+Disallow: /map/
+Disallow: /lookup/

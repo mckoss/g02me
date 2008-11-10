@@ -1,0 +1,111 @@
+{% extends "pages.html" %}
+{% block subTitle %}Administration{% endblock %}
+{% block pagebody %}
+<div class="page">
+
+<a target="_top" href="/"><img title="{{site_name}}" class="logo" src="/images/logo.png"></a>
+<h1 style="padding-top: 40px;">Community URL Sharing Service</h1>
+
+
+<div class="left">
+<h2>Welcome, {{ user.nickname }}</h2>
+
+
+<h2>Memcache</h2>
+<a href="/admin/flush-memcache">Flush</a>
+<ol>
+{% for pair in MemCache %}
+	<li>{{pair.key}}: {{pair.value|escape}}</li>
+{% endfor %}
+</ol>
+</div> <!-- left -->
+
+<div class="right">
+
+{% if Broken %}
+<p>
+<a href="/admin/clean-broken">Remove Broken Scores</a> ({{ Broken|length }})
+<table class="scores">
+<tr><th>name</th><th>hrsHalf</th><th>S</th><th>LogS</th><th>hrsLast</th></tr>
+{% for score in Broken %}
+	<tr>
+		<td>{{score.name}}</td>
+		<td class="num">{{score.hrsHalf}}</td>
+		<td class="num">{{score.S}}</td>
+		<td class="num">{{score.LogS}}</td>
+		<td class="num">{{score.DateLast}}</td>
+	</tr>
+{% endfor %}
+</table>
+</p>
+{% endif %}
+
+{% if BadComments %}
+<p>
+<a href="/admin/clean-comments">Remove Empty Comments</a>
+<table class="scores">
+<tr><th>comment</th><th>dateCreated</th><th>MapKey</th></tr>
+{% for comment in BadComments %}
+	<tr>
+		<td>{{comment.comment|escape}}</td>
+		<td class="num">{{comment.dateCreated}}</td>
+		<td class="num">{{comment.MapKey}}</td>
+	</tr>
+{% endfor %}
+</table>
+</p>
+{% endif %}
+
+{% if BrokenComments %}
+<p>
+<a href="/admin/clean-broken-comments">Remove Broken Comments</a> ({{BrokenComments|length}})
+<table class="scores">
+<tr><th>comment</th><th>dateCreated</th><th>MapKey</th></tr>
+{% for comment in BrokenComments %}
+	<tr>
+		<td>{{comment.comment|escape}}</td>
+		<td class="num">{{comment.dateCreated}}</td>
+		<td class="num">{{comment.MapKey}}</td>
+	</tr>
+{% endfor %}
+</table>
+</p>
+{% endif %}
+
+{% if BadCounts %}
+<p>
+<a href="/admin/fix-tag-counts">Fix Tag Counts</a> ({{BadCounts|length}})
+<ol>
+{% for map in BadCounts %}
+	<li>(<a href="/info/{{map.GetId}}">info</a>): {{map.STagDiff|escape}}</li>
+{% endfor %}
+</ol>
+<p>
+{% endif %}
+
+{% if MissingCreator %}
+<p>
+<a href="/admin/fix-missing-creators">Fix Missing Creators</a> ({{MissingCreator|length}})
+<table class="scores">
+<tr><th>comment</th><th>Cmt Date</th><th>Link Date</th><th>Shared By</th><th>Creator</th></tr>
+{% for comment in MissingCreator %}
+	<tr>
+		<td><a href="/{{comment.map.GetId}}">{{comment.map.GetId}}</a></td>
+		<td class="num">{{comment.dateCreated|date:"m/d/y H:i:s"}}</td>
+		<td class="num">{{comment.map.dateCreated|date:"m/d/y H:i:s"}}</td>
+		<td class="num">{{comment.username}}</td>
+		<td class="num">{{comment.map.Creator}}</td>
+	</tr>
+{% endfor %}
+</table>
+</p>
+{% endif %}
+</div> <!-- right -->
+
+<div class="bottom">
+<a href="{{ logout }}">Logout</a>
+</div> <!-- bottom -->
+
+
+</div> <!-- page -->
+{% endblock %}
