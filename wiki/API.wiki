@@ -106,6 +106,17 @@ When a Failure status code is returned, the property, 'message', may contain a h
 
 == Examples ==
 
+http://go2.me/cmd/setusername?username=test&callback=Test
+
+Results:
+{{{
+Test({
+    "username": "test", 
+    "status": "OK", 
+    "secsResponse": "0.03"
+});
+}}}
+
 http://go2.me/?callback=Test
 
 Results:
