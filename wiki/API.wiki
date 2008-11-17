@@ -14,7 +14,15 @@ http://go2.me/...?callback=MyCallback
 to which the response will look like:
 
 {{{
-MyCallback({status:"OK", ...});
+MyCallback({status:"OK", secsResponse:"x.xx", ...});
+}}}
+
+secsResponse displays the number of seconds required on the server to respond to the request.
+
+Any request which writes data to the server additionally needs to supply an apikey, e.g.:
+
+{{{
+http://go2.me/...?callback=MyCallback&apikey=api~test~100~2008-01-01~9C71FFA7A4B25572066019ED5FF702E37375EEF7
 }}}
 
 == Concepts ==
@@ -31,6 +39,7 @@ Each URL has the following information that can be retrieved about it:
   * created: Date url was first shortened
   * viewed: Total number of times the Go2.me URL has been accesssed/viewed
   * shared: Total number of times users have shared this URL (mapped the full URL to it's shortcut).
+  * tags: Array of the top 10 most popular tags used for this URL.
   * scores: A collection of time-weighted scores based on the total activity surrounding the URL.
   * comments: A collection of user comments about the shared URL.
 
@@ -78,6 +87,8 @@ The value of the 'status' property of the returned JSON object can be one of:
 || Fail/!NotFound || Object was not found/does not exist ||
 || Fail/Domain || Attempt to create a shortened URL for a forbidden domain ||
 || Warning/Domain || Attempt to create a shortened URL on the Go2.me domain ||
+|| Fail/Auth/xxx || Authentication fail of type xxx.  One of "read", "write", "api", or "admin" ||
+|| Fail/Busy/xxx || The server is unable to process requests at the rate that are being generated. xxx may specify an api key, user id, or ip address that is being limited. ||
 
 When a Failure status code is returned, the property, 'message', may contain a human readable explanation of the error.
 
@@ -88,7 +99,8 @@ When a Failure status code is returned, the property, 'message', may contain a h
 || /info/id || Retrieve information about a shortened URL id. || url_info ||
 || /map/?url=...&title=... || Generate a shorted URL from a long one. || url_info ||
 || /comment/?id=xxx&comment=text-string || Add a comment to the URL with id, xxx || url_info ||
-|| /comment/delete?cid=xxx || Remove the comment with comment id, xxx || url_info ||
+|| /comment/delete?delkey=xxx || Remove the comment with deletion key, xxx || url_info ||
+|| /cmd/setusername?username=xxx || Set the current user's nickname (or clear it if the 'username' parameter is missing ||
 
 == Examples ==
 
@@ -96,24 +108,46 @@ http://go2.me/?callback=Test
 
 Results:
 {{{
-Test({"popular": [
-    {"created": new Date("10/19/2008  1: 3 GMT"),
-     "url": "http://www.google.com/",
-     "title": "Google",
-     "comments": [
-      {"comment": "Good point - I do need to add a session key, I think",
-       "cid": 2429, "user": "mckoss", "created": new Date("10/20/2008  4:41 GMT")},
-      ...
-      ],
-     "scores": {
-      "week": 1.0347861977813146, "year": 0.02562912538964475,
-      "day": 4.1392126989301516, "month": 0.26946271753682216},
-     "shared": 12,
-     "id": "G",
-     "viewed": 180},
-     ...
-     ],
-    "status": "OK"});
+Test({
+    "status": "OK", 
+    "secsResponse": "3.76", 
+    "pages": [
+        {
+            "created": new Date("11/15/2008 20:54 GMT"), 
+            "url": "http://www.tonywright.com/2008/startup-founder-evolution/", 
+            "title": "Startup Founder Evolution - Tony Wright dot com", 
+            "comments": [
+                {
+                    "comment": "Good points!", 
+                    "user": "zzelinski", 
+                    "created": new Date("11/15/2008 23:32 GMT")
+                }, 
+                {
+                    "comment": "Sorry, you can close the Frameset by clicking the close box in the upper right.", 
+                    "delkey": "dk~5961~E7FE7F6D10FBDC6C577703FFAB356402A87AF02A", 
+                    "user": "mckoss", 
+                    "created": new Date("11/15/2008 23:17 GMT")
+                }, 
+                {
+                    "comment": "WTF? I don't like iframes.", 
+                    "user": "youknowwhu", 
+                    "created": new Date("11/15/2008 21:41 GMT")
+                }
+            ], 
+            "tags": [], 
+            "scores": {
+                "week": 0.19815416341606795, 
+                "year": 0.0063837153028364329, 
+                "day": 0.69819712079902529, 
+                "month": 0.049906189233787493
+            }, 
+            "shared": 1, 
+            "id": "76", 
+            "viewed": 45
+        }, 
+        ...
+    ]
+});
 }}}
 
 http://go2.me/info/G?callback=Test
