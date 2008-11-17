@@ -22,8 +22,10 @@ secsResponse displays the number of seconds required on the server to respond to
 Any request which writes data to the server additionally needs to supply an apikey, e.g.:
 
 {{{
-http://go2.me/...?callback=MyCallback&apikey=api~test~100~2008-01-01~9C71FFA7A4B25572066019ED5FF702E37375EEF7
+http://go2.me/...?callback=MyCallback&apikey=api~test~1~2009-01-01~E850C33E7F45ADB290F609D565A7C54BCBAB2166
 }}}
+
+Note, the key show expires on Jan 1, 2009, and is limited to one request per minute.  It may be used for limited testing. If you want to use this api, please send mail to apikey at go2.me.
 
 == Concepts ==
 
@@ -154,88 +156,161 @@ http://go2.me/info/G?callback=Test
 
 Results:
 {{{
-Test({"status": "OK",
-  "created": new Date("10/19/2008  1: 3 GMT"),
-  "url": "http://www.google.com/",
-  "title": "Google",
-  "comments": [
-    {"comment": "Good point - I do need to add a session key, I think",
-     "cid": 2429, "user": "mckoss", "created": new Date("10/20/2008  4:41 GMT")},
-    {"comment": "It is not a good idea to mutate state with http GET",
-     "cid": 2603, "user": 176, "created": new Date("10/20/2008  2:28 GMT")},
-    {"comment": "The mighty search engine...",
-     "cid": 201, "user": "mckoss", "created": new Date("9/3/2008  2:45 GMT")}
-    ],
-  "scores": {
-    "week": 1.0351657695680767, "year": 0.025629305528245251,
-    "day": 4.1498525861082705, "month": 0.26948546154964254
-    },
-  "shared": 12,
-  "id": "G",
-  "viewed": 180});
+Test({
+    "status": "OK", 
+    "created": new Date("10/19/2008 01:03 GMT"), 
+    "url": "http://www.google.com/", 
+    "title": "Google", 
+    "comments": [
+        {
+            "comment": "The mighty search engine...", 
+            "delkey": "dk~201~F546D5513B560E5EF965117046B2E04485EC14A6", 
+            "user": "mckoss", 
+            "created": new Date("09/03/2008 02:45 GMT")
+        }
+    ], 
+    "tags": [], 
+    "scores": {
+        "week": 0.12193804049094506, 
+        "year": 0.032913117370156744, 
+        "day": 0.11136483457690714, 
+        "month": 0.20523006874462313
+    }, 
+    "shared": 16, 
+    "id": "G", 
+    "viewed": 254
+});
 }}}
 
 http://go2.me/map/?url=http://code.google.com/p/g02me/wiki/API&title=Edit%20API-g02me&callback=Test
 
 Results:
 {{{
-Test({"status": "OK",
-  "created": new Date("10/18/2008 16:26 GMT"),
-  "url": "http://code.google.com/p/g02me/wiki/API",
-  "title": "API - g02me - Google Code",
-  "comments": [
-    {"comment": "First draft complete",
-     "cid": 2162, "user": "mckoss", "created": new Date("10/16/2008 22:49 GMT")}
-    ],
-  "scores": {
-    "week": 0.17224015091477538, "month": 0.045440163041166333,
-    "day": 0.64928537808244025, "year": 0.0061774940162845062},
-  "shared": 5,
-  "id": "1g",
-  "viewed": 25});
+Test({
+    "status": "OK", 
+    "created": new Date("10/18/2008 16:26 GMT"), 
+    "url": "http://code.google.com/p/g02me/wiki/API", 
+    "title": "API - g02me - Google Code", 
+    "comments": [
+        {
+            "comment": "", 
+            "delkey": "dk~3023~678881DA8D8FA81369F51701A57AF1EF59463A45", 
+            "created": new Date("10/22/2008 14:06 GMT"), 
+            "user": "mckoss", 
+            "tags": "python,tinyurl"
+        }, 
+        {
+            "comment": "", 
+            "delkey": "dk~3203~FDB8DE0C7399600865DD3D258F6A2CB11BFECFC7", 
+            "created": new Date("10/22/2008 05:24 GMT"), 
+            "user": "mckoss", 
+            "tags": "g02me"
+        }, 
+        {
+            "comment": "That's a good point.  But client-side cross-site scripting demands use of GET.  Solution is to add a \"developer key\" param.", 
+            "delkey": "dk~2606~EE297D160498D124AFE010B582DEA9AB87AC4FC4", 
+            "user": "mckoss", 
+            "created": new Date("10/20/2008 04:26 GMT")
+        }, 
+        {
+            "comment": "Funny!  The Google Bot and other crawlers will create tiny urls and comment when when they crawl this page.   Hint: Use POST instead of GET.", 
+            "delkey": "dk~2421~D6A4744A7339C07026A5D280BD8E5B89B9D1553D", 
+            "created": new Date("10/20/2008 02:31 GMT")
+        }, 
+        {
+            "comment": "First draft complete", 
+            "delkey": "dk~2162~3716719FA753D81E480DD725D904C79A1B406C72", 
+            "user": "mckoss", 
+            "created": new Date("10/16/2008 22:49 GMT")
+        }
+    ], 
+    "tags": [
+        "g02me", 
+        "python", 
+        "tinyurl"
+    ], 
+    "scores": {
+        "week": 0.061282271195171684, 
+        "month": 0.054505052482993734, 
+        "day": 0.14110924810270739, 
+        "year": 0.0095228319607937404
+    }, 
+    "shared": 10, 
+    "id": "1g", 
+    "viewed": 48
+});
 }}}
 
-http://go2.me/comment/?id=G&comment=test:This%20is%20a%20test%20comment%20%5Bsearch%2C%20engine%5D&callback=Test
+http://go2.me/comment/?id=G&comment=test:This%20is%20a%20test%20comment%20%5Bsearch%2C%20engine%5D&callback=Test&apikey=api~test~1~2009-01-01~E850C33E7F45ADB290F609D565A7C54BCBAB2166
 
 Results:
 {{{
-Test({"status": "OK",
-  "created": new Date("10/19/2008  1: 3 GMT"),
-  "url": "http://www.google.com/",
-  "title": "Google",
-  "comments": [
-    {"comment": "This is a test comment",
-     "created": new Date("10/20/2008  9:36 GMT"),
-     "cid": 2433,
-     "user": "test",
-     "tags": "search,engine"},
+Test({
+    "status": "OK", 
+    "secsResponse": "0.51", 
+    "created": new Date("10/19/2008 01:03 GMT"), 
+    "url": "http://www.google.com/", 
+    "title": "Google", 
+    "comments": [
+        {
+            "comment": "This is a test comment", 
+            "delkey": "dk~6163~AA07EECB58B7129D89A451CEE2202529C7AB3D03", 
+            "created": new Date("11/17/2008 04:58 GMT"), 
+            "user": "test", 
+            "tags": "search,engine"
+        }, 
+        {
+            "comment": "The mighty search engine...", 
+            "user": "mckoss", 
+            "created": new Date("09/03/2008 02:45 GMT")
+        }
+    ], 
+    "tags": [
+        "engine", 
+        "search"
+    ], 
+    "scores": {
+        "week": 0.13012053774511992, 
+        "year": 0.033070985209589128, 
+        "day": 0.16796731080036048, 
+        "month": 0.2071079570550399
+    }, 
+    "shared": 16, 
+    "id": "G", 
+    "viewed": 254
+});
+}}}
+
+If you hit the api throttling limit the result will look like this:
+
+{{{
+Test({
+    "status": "Fail/Busy/write", 
+    "message": "Maximum request rate exceeded (1.9 per minute - 1 allowed for 24.16.108.51.write)", 
+    "secsResponse": "0.05"
+});
+}}}
+
+http://go2.me/comment/delete?delkey=dk~6163~AA07EECB58B7129D89A451CEE2202529C7AB3D03&callback=Test&apikey=api~test~1~2009-01-01~E850C33E7F45ADB290F609D565A7C54BCBAB2166
+
+Results:
+{{{
+Test({
+    "status": "OK", 
+    "secsResponse": "0.36", 
+    "created": new Date("10/19/2008 01:03 GMT"), 
+    "url": "http://www.google.com/", 
+    "title": "Google", 
     ...
-    ],
-  "scores": {...},
-  "shared": 12,
-  "id": "G",
-  "viewed": 180});
+});
 }}}
 
-http://go2.me/comment/delete?cid=2433&callback=Test
+If the comment does not exist, the results will look like:
 
-Results:
 {{{
-Test({"status": "OK",
-  "created": new Date("10/19/2008  1: 3 GMT"),
-  "url": "http://www.google.com/",
-  "title": "Google",
-  "comments": [...],
-  "scores": {...},
-  "shared": 12,
-  "id": "G",
-  "viewed": 182});
-}}}
-
-http://localhost:8080/comment/delete?cid=555&callback=Test
-
-Results:
-{{{
-Test({"status": "Fail/NotFound",
-  "message": "Comment id=555 does not exists"});
+Test({
+    "status": "Fail/NotFound", 
+    "message": "Comment id=6163 does not exists", 
+    "secsResponse": "0.20"
+});
 }}}
