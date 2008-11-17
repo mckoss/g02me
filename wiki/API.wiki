@@ -1,14 +1,14 @@
-#summary Developer Information for G02.ME
+#summary Developer Information for Go2.me
 #labels Featured
 
 == Introduction ==
 
-G02.ME functionality is available to programmers through a JSON/Javascript API.  Most of the URL's that are supported by the user-interface have a JSON-equivalent request.
+Go2.me functionality is available to programmers through a JSON/Javascript API.  Most of the URL's that are supported by the user-interface have a JSON-equivalent request.
 
 All requests are of the form:
 
 {{{
-http://g02.me/...?callback=MyCallback
+http://go2.me/...?callback=MyCallback
 }}}
 
 to which the response will look like:
@@ -17,31 +17,19 @@ to which the response will look like:
 MyCallback({status:"OK", ...});
 }}}
 
-Static requests can be inserted in a web page via:
-
-{{{
-<script>
-function MyCallback(obj)
-{
-    ... your code here ...
-}
-</script>
-<script src="http://g02.me/...?callback=MyCallback"></script>
-}}}
-
 == Concepts ==
 
-G02.ME stores shortened URL's and collects analytics information about user interactions with them.  Each shortened URL is assigned an _id_ (which is encoded as a base-57 number using digits, (upper and lower case) letters and the characters "-" and "`_`").
+Go2.me stores shortened URL's and collects analytics information about user interactions with them.  Each shortened URL is assigned an _id_ (which is encoded as a base-55 number using digits, and upper and lower case letters).
 
 === UR Info Format ===
 
 Each URL has the following information that can be retrieved about it:
 
   * url: The _long_ URL
-  * id: The base-57 identifier for the shortened URL
+  * id: The base-55 identifier for the shortened URL
   * title: The page title
   * created: Date url was first shortened
-  * viewed: Total number of times the G02.ME URL has been accesssed/viewed
+  * viewed: Total number of times the Go2.me URL has been accesssed/viewed
   * shared: Total number of times users have shared this URL (mapped the full URL to it's shortcut).
   * scores: A collection of time-weighted scores based on the total activity surrounding the URL.
   * comments: A collection of user comments about the shared URL.
@@ -58,7 +46,7 @@ The API returns an array of comment objects with the parts extracted into distin
   * user: The user name associated with the comment (or id number if anonymous)
   * tags: A comma separated list of tags
   * created: Date comment was created
-  * cid: Globally unique id for the comment
+  * delkey: Globally unique id which can be used to delete the comment
 
 === Scores ===
 
@@ -89,6 +77,7 @@ The value of the 'status' property of the returned JSON object can be one of:
 || Fail || Generic failure ||
 || Fail/!NotFound || Object was not found/does not exist ||
 || Fail/Domain || Attempt to create a shortened URL for a forbidden domain ||
+|| Warning/Domain || Attempt to create a shortened URL on the Go2.me domain ||
 
 When a Failure status code is returned, the property, 'message', may contain a human readable explanation of the error.
 
@@ -103,7 +92,7 @@ When a Failure status code is returned, the property, 'message', may contain a h
 
 == Examples ==
 
-http://g02.me/?callback=Test
+http://go2.me/?callback=Test
 
 Results:
 {{{
@@ -127,7 +116,7 @@ Test({"popular": [
     "status": "OK"});
 }}}
 
-http://g02.me/info/G?callback=Test
+http://go2.me/info/G?callback=Test
 
 Results:
 {{{
@@ -152,7 +141,7 @@ Test({"status": "OK",
   "viewed": 180});
 }}}
 
-http://g02.me/map/?url=http://code.google.com/p/g02me/wiki/API&title=Edit%20API-g02me&callback=Test
+http://go2.me/map/?url=http://code.google.com/p/g02me/wiki/API&title=Edit%20API-g02me&callback=Test
 
 Results:
 {{{
@@ -172,7 +161,7 @@ Test({"status": "OK",
   "viewed": 25});
 }}}
 
-http://g02.me/comment/?id=G&comment=test:This%20is%20a%20test%20comment%20%5Bsearch%2C%20engine%5D&callback=Test
+http://go2.me/comment/?id=G&comment=test:This%20is%20a%20test%20comment%20%5Bsearch%2C%20engine%5D&callback=Test
 
 Results:
 {{{
@@ -194,7 +183,7 @@ Test({"status": "OK",
   "viewed": 180});
 }}}
 
-http://g02.me/comment/delete?cid=2433&callback=Test
+http://go2.me/comment/delete?cid=2433&callback=Test
 
 Results:
 {{{
