@@ -91,6 +91,7 @@ The value of the 'status' property of the returned JSON object can be one of:
 || Warning/Domain || Attempt to create a shortened URL on the Go2.me domain ||
 || Fail/Auth/xxx || Authentication fail of type xxx.  One of "read", "write", "api", or "admin" ||
 || Fail/Busy/xxx || The server is unable to process requests at the rate that are being generated. xxx may specify an api key, user id, or ip address that is being limited. ||
+|| Fail/Used || If setusername is called for a user nickname that is already in use. ||
 
 When a Failure status code is returned, the property, 'message', may contain a human readable explanation of the error.
 
@@ -116,6 +117,19 @@ Test({
     "secsResponse": "0.03"
 });
 }}}
+
+if the given username is already in use the response will be:
+
+{{{
+Test({
+    "status": "Fail/Used", 
+    "message": "Username (test) already in use"
+});
+}}}
+
+The username can be forced to over-ride the uniqueness test by using the force=true parameter:
+
+http://go2.me/cmd/setusername?username=test&callback=Test&force=true
 
 http://go2.me/?callback=Test
 
