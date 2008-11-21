@@ -1,0 +1,33 @@
+{% extends "pages.html" %}
+{% block subTitle %}{{usernamePage}}'s activity{% endblock %}
+{% block pagebody %}
+<div class="page">
+<a target="_top" href="/" title="{{site_name}} Home | Popular Pages"><img class="logo" src="/images/logo.png"></a>
+<h1 style="padding-top: 40px;">{{usernamePage}}'s activity</h1>
+<div style='clear:both;'></div>
+<table class="scores">
+<tr><th>Title</th><th>Shared</th><th>Viewed</th><th>Comments</th><th>Created</th></tr>
+{% for comment in comments %}
+	<tr>
+		<td><a href="/{{comment.map.GetId}}" title="{{comment.map.url|escape}}">{{comment.map.title|escape}}</a>
+		{% if comment.comment or comment.tags %}<div class="comments"><p>
+			{% ifequal comment.comment "__share" %}<i>Shared</i>{% else %}{{comment.comment|escape|urlize}}{% endifequal %}
+			{% if comment.tags %}
+	    		[{% for tag in comment.TagList %}<a target="_top" href="/tag/{{tag}}">{{tag|escape}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}]
+	    	{% endif %}
+	    	- <i>{{ comment.Age }}</i>
+	    	</p></div>
+	    {% endif %}
+		</td>
+		<td class="num">{{comment.map.shareCount}}</td>
+		<td class="num">{{comment.map.viewCount}}</td>
+		<td class="num">{{comment.map.CommentCount}}</td>
+		<td class="age">{{comment.map.Age}}
+			{% if comment.map.Creator %}
+				by <a href="/user/{{comment.map.Creator}}">{{comment.map.Creator}}</a>
+			{% endif %}
+		</td>
+	</tr>
+{% endfor %}
+</table>
+{% endblock %}
