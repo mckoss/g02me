@@ -1,0 +1,186 @@
+body {
+margin: 2px 8px;
+padding: 0;
+font-family: verdana, arial, sans-serif;
+font-size: 12px;
+color: #3d94b0;
+}
+
+h1 {
+margin: 0;
+font-size: 18px;
+white-space: nowrap;
+overflow: hidden;
+}
+
+h2 {
+margin: 0;
+font-size: 16px;
+}
+
+p {
+margin: 3px 0px;
+}
+
+p.subhead {
+font-style: italic;
+margin-bottom: 15px;
+}
+
+p.help {
+font-style: italic;
+color: #CDAC6D;
+}
+
+p.url {
+font-size: 10px;
+white-space: nowrap;
+overflow: hidden;
+}
+
+a {
+color: #45AFD1;
+text-decoration: none;
+}
+
+a:hover {
+text-decoration: underline;
+}
+
+img {
+border: 0;
+}
+
+img.logo {
+width: 200px;
+height: 73px;
+float: left;
+margin-right: 10px;
+margin-bottom: 10px;
+}
+
+img.logo-small {
+width: 93px;
+height: 34px;
+float: left;
+margin-right: 10px;
+padding-top: 2px;
+}
+
+img.x:hover {
+cursor: pointer;
+}
+
+li {
+line-height: 18px;
+margin-left: -5px;
+}
+
+/* Info-bar styles (for head.html) */
+
+#info-status {
+float: right;
+margin-left: 5px;
+padding-left: 5px;
+width: 180px;
+border-left: 1px solid #45AFD1;
+}
+
+p.stats-header {
+text-align: center;
+font-weight: bold;
+color: white;
+background-color: #45AFD1;
+}
+
+#info-body {
+margin-right: 160px;
+}
+
+#info-form {
+clear: left;
+padding: 0;
+margin: 0;
+white-space: nowrap;
+overflow: hidden;
+min-width: 400px;
+}
+
+label {
+font-size: 12px;
+}
+
+input[type=text] {
+background-color: #EEE;
+border: 1px solid #AAA;
+padding: 1px 2px;
+margin: 1px;
+}
+
+div.comments p {
+color: #AAA;
+}
+
+/* Page-specific styles (based on pages.html master template) */
+
+div.page {
+width: 910px;
+margin: auto;
+}
+
+div.heading {
+float: right;
+white-space: nowrap;
+}
+
+div.left {
+clear: left;
+width: 350px;
+float: left;
+}
+
+div.right {
+float: right;
+width: 540px;
+padding-left: 10px;
+border-left: 1px solid #45AFD1;
+}
+
+div.timer {
+clear: both;
+padding-top:15px;
+text-align:center;
+}
+
+div.bottom {
+clear:both;
+text-align:center;
+padding-top: 25px;
+}
+
+table {
+border-collapse: collapse;
+}
+
+table.scores th {
+text-align: left;
+border-bottom: 1px solid;
+padding-right: 10px;
+}
+
+table.scores td {
+vertical-align: top;
+padding-bottom: 5px;
+}
+
+table.scores td.num {
+text-align: center;
+}
+
+table.scores td.age {
+white-space: nowrap;
+}
+
+th {
+text-align: right;
+}
