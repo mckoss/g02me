@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<link rel="icon" type="image/png" href="/images/favicon.png">
+<title>{{site_name}} - {{map.title|escape}}</title>
+<script src='http://www.google-analytics.com/ga.js'></script>
+<script>
+msLoaded = new Date().getTime();
+
+function BeforeUnload(evt)
+{
+	msUnloading = new Date().getTime();
+	
+	if (msUnloading - msLoaded < 5000)
+		{
+		evt = evt || window.event || {};
+		evt.returnValue = "Click CANCEL to keep the {{site_name}} header at the top of the page.";
+		return evt.returnValue;
+		}
+}
+
+window.onbeforeunload = BeforeUnload;
+
+function Go2MeParentClick()
+{
+	msLoaded = 0;
+}
+
+window.onclick = Go2MeParentClick;
+
+var pageTracker = _gat._getTracker("UA-5439059-1");
+pageTracker._trackPageview();
+</script>
+</head>
+<frameset rows="137,*">
+<frame src="/info/{{map.GetId}}?{{req.META.QUERY_STRING}}" marginwidth="0" marginheight="0"/>
+<frame src="{{map.Href}}"/>
+<noframes>
+<body>
+Your browser does not support frames.  Your can visit the target page at {{ map.url|escape }}
+</body>
+</noframes>
+</frameset>
+</html>

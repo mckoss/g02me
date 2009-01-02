@@ -1,0 +1,89 @@
+{% extends "pages.html" %}
+{% load humanize %}
+{% load custom %}
+{% block subTitle %}{{username}}'s profile{% endblock %}
+
+{% block script %}
+Go2.SetCSRF("{{csrf}}");
+
+var formProfile;
+
+function Loaded()
+{
+	idFocus = "{{error_field}}";
+	
+	if (!idFocus)
+		idFocus = "sFullname";
+	
+	var txtFocus = document.getElementById(idFocus);
+	txtFocus.focus();
+}
+
+function Click()
+{
+	// Call the Click function in our parent window in case we're in a Frame
+	if (window.parent && window.parent.Go2MeParentClick != undefined)
+		window.parent.Go2MeParentClick();
+}
+
+window.onclick = Click;
+{% endblock %}
+
+{% block pagebody %}
+<div class="page">
+<div class="head">
+	<a target="_top" href="/" title="{{site_name}} Home | Popular Pages"><img class="logo" src="/images/logo.png"></a>
+	<a href="/user/{{profileForm.username}}/picture_full"><img class="profile" src="/user/{{profileForm.username}}/picture_med"></a>
+	<h1 style="padding-top: 40px;">{{username}}'s profile</h1>
+	<div style='clear:both;'></div>
+</div>
+
+<script>
+	if (location.hash == "#saved")
+		document.write('<p class="message">Profile Saved. Return to <a href="/">Home</a></p>');
+</script>
+{% if message %}
+<p class="error">{{message}}.</p>
+{% endif %}
+
+<form enctype="multipart/form-data" action="/profile" method="POST">
+<input type="hidden" name="csrf" value="{{csrf}}"/>
+<table class="form">
+	<tr>
+		<th><label for="username">Nickname:</label></th>
+		<td>
+		{% if not profileForm.username %}
+			<input type="text" id="username" name="username" value=""/>
+		{% else %}
+			<p class="static">{{ profileForm.username }}</p>
+		{% endif %}
+		</td>
+	</tr>
+	<tr><th><label for="sFullname">Full Name:</label></th>
+		<td><input type="text" id="sFullname" name="sFullname" value="{{profileForm.sFullname|escape}}"/>
+		    <p class="help">What's your real name?</p></td></tr>
+	<tr><th><label for="img">Profile picture:</label></th>
+		<td><input type="file" size="40" id="img" name="img" accept="image"/>
+			<br/><img class="profile" src="/user/{{profileForm.username}}/picture_med">
+			<p class="help">Upload an image file (PNG, JPG, or GIF) to change your profile picture.</p>
+		</td></tr>	
+	<tr><th><label for="sLocation">Location:</label></th>
+		<td><input type="text" id="sLocation" name="sLocation" value="{{profileForm.sLocation|escape}}"/>
+		    <p class="help">Where are you?</p></td></tr>
+	<tr><th><label for="dateBirth">Birth Date:<br/>(required)</label></th>
+		<td><input type="text" id="dateBirth" name="dateBirth" value="{{profileForm.dateBirth|escape}}"/>
+			<p class="help">Confirm your age.  We won't share with anyone else.  Enter as M/D/YYYY.</p></td></tr>
+	<tr><th><label for="urlHome">Home Page:</label></th>
+		<td><input type="text" class="full" id="urlHome" name="urlHome" value="{{profileForm.urlHome|escape}}"/>
+			<p class="help">Enter a URL for your home page, if you have one.</p></td></tr>
+	<tr><th><label for="sAbout">About me:</label></th>
+		<td><textarea id="sAbout" name="sAbout">{{profileForm.sAbout|escape}}</textarea>
+			<p class="help">Tell people about yourself.</p></td></tr>
+
+	<tr><th></th><td><input type="submit" value="Save"/></td></tr>
+	
+
+</table>
+</form>
+
+{% endblock %}

@@ -1,0 +1,291 @@
+body {
+margin: 2px 8px;
+padding: 0;
+font-family: verdana, arial, sans-serif;
+font-size: 14px;
+color: #3d94b0;
+}
+
+h1 {
+margin: 0;
+font-size: 20px;
+white-space: nowrap;
+overflow: hidden;
+}
+
+h2 {
+margin: 0 0 5px 0;
+font-size: 18px;
+font-weight: normal;
+}
+
+p {
+margin: 10px 0;
+}
+
+p.subhead {
+font-style: italic;
+font-weight: bold;
+margin: 3px 0;
+}
+
+p.help {
+font-size: 12px;
+font-style: italic;
+color: #CDAC6D;
+margin: 0 0 3px 0;
+}
+
+p.error {
+font-style: italic;
+color: red;
+text-align:center;
+}
+
+p.message {
+font-style: italic;
+text-align:center;
+padding: 10px;
+background-color: #D7E8ED;
+}
+
+p.url {
+font-size: 10px;
+white-space: nowrap;
+overflow: hidden;
+margin: 0;
+}
+
+a {
+color: #45AFD1;
+text-decoration: none;
+}
+
+a:hover {
+text-decoration: underline;
+}
+
+div.bookmarklet {
+text-align: center;
+padding: 15px 0;
+}
+
+img {
+border: 0;
+}
+
+img.logo {
+width: 200px;
+height: 73px;
+float: left;
+margin-right: 10px;
+margin-bottom: 10px;
+}
+
+img.logo-small {
+width: 93px;
+height: 34px;
+float: left;
+margin-right: 10px;
+padding-top: 2px;
+}
+
+img.profile {
+float:left;
+padding:5px;
+}
+
+img.inline {
+vertical-align:middle; 
+}
+
+img.x:hover {
+cursor: pointer;
+}
+
+li {
+line-height: 18px;
+margin-left: -5px;
+margin-bottom: 3px;
+}
+
+/* Info-bar styles (for head.html) */
+
+#info-status {
+float: right;
+margin-left: 5px;
+padding-left: 5px;
+width: 180px;
+border-left: 1px solid #45AFD1;
+}
+
+#info-status p
+{
+margin: 0;
+}
+
+p.stats-header {
+text-align: center;
+font-weight: bold;
+color: white;
+background-color: #45AFD1;
+}
+
+#info-body {
+margin-right: 160px;
+}
+
+#info-form {
+clear: left;
+padding: 0;
+margin: 0;
+white-space: nowrap;
+overflow: hidden;
+min-width: 400px;
+}
+
+label {
+font-size: 12px;
+}
+
+input[type=text] {
+background-color: #EEE;
+border: 1px solid #AAA;
+padding: 1px 2px;
+margin: 1px;
+}
+
+div.comments p {
+color: #AAA;
+margin: 0 0;
+}
+
+/* Page-specific styles (based on pages.html master template) */
+
+div.page {
+width: 910px;
+margin: auto;
+}
+
+div.heading {
+float: right;
+white-space: nowrap;
+}
+
+div.head {
+padding-bottom: 20px;
+}
+
+div.left {
+clear: left;
+width: 440px;
+float: left;
+}
+
+div.right {
+float: right;
+width: 440px;
+padding-left: 20px;
+border-left: 1px solid #45AFD1;
+}
+
+div.timer {
+clear: both;
+padding-top:15px;
+text-align:center;
+}
+
+div.bottom {
+clear:both;
+text-align:center;
+padding-top: 25px;
+}
+
+table {
+border-collapse: collapse;
+}
+
+table.scores {
+margin: auto;
+width: 900px;
+}
+
+table.scores th {
+text-align: left;
+border-bottom: 1px solid;
+padding-right: 10px;
+}
+
+table.scores td {
+vertical-align: top;
+padding-top: 5px;
+}
+
+table.scores td.title div {
+width: 400px;
+overflow: hidden;
+}
+
+table.scores td.num {
+text-align: center;
+}
+
+table.scores td.age {
+white-space: nowrap;
+}
+
+th {
+text-align: right;
+vertical-align: top;
+padding-top: 5px;
+padding-right: 5px;
+}
+
+table.scores td.bar {
+vertical-align: middle;
+padding-left: 5px;
+width: 200px;
+}
+
+table.form td
+{
+padding-bottom: 10px;
+width: 400px;
+}
+
+table.form input[type=text] {
+width: 150px;
+}
+
+table.form td p.static {
+margin-top: 2px;
+}
+
+table.form input.full {
+width: 380px
+}
+
+table.form textarea {
+width: 380px;
+height: 50px;
+}
+
+table.form input[type=submit] {
+width: 70px;
+}
+
+div.bar {
+background-color: #E39000;
+border: 1px solid #9E6700;
+width: 0;
+margin: 0;
+padding: 0;
+cursor: default;
+}
+
+div.about {
+width: 400px;
+padding: 10px;
+margin: 0 auto 25px auto;
+background-color: #D7E8ED;
+}

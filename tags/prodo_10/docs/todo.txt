@@ -1,0 +1,347 @@
+                                                Go2.me To-Do List
+
+------------------------------------------------------------
+           FEATURES AND DESIGN IMPROVEMENTS
+------------------------------------------------------------
+
+- Home
+  - Number of views
+  - Number of people (day/month)
+  - Top users
+  - Form post method of posting a URL
+- Info Header
+    - Design (see delicious page: http://delicious.com/url/6e4e9fc8547418f22ac89a5f7558e58b?show=notes_only, for inspiration)
+	- Info bar horizontal/vertical option
+	  - Default based on display orientation
+	- Pull web page image from Sphere, Alexa or Faves?
+	- Help icon to explain comment format (hover?) - remove help line?
+	- Help landing page w/ callouts to all the things you can do with the command line
+	- Link statistics
+		- Log referers for a url - display click sources ala YouTube and bit.ly Statistics
+		- Log search terms and number of click through via search (info merge first?)
+! Tags
+	- Record tags scores for top 10 tags each URL
+	- Recently popular tag pages (Today AND Year)
+	- Tag cloud on home page
+	- Show tags in home page and tags page - encourage cross-linking around the site
+	  - Aggregrate related tags at top of tag page (or sidebar)
+	  - Tag cloud format
+	  - Incidence graph (or just summary of the tags used by links on the displayed page)?
+- convert embedded comment links to g02me links automatically
+- Full text search (google Search widget or API)
+- Auto-tag domains (nyt.com, e.g.)
+- Popularity views flags/icons
+  ! Up/Down Arrows
+  - "New" marker
+  - Base on 2x rate on next higher halfLife scale
+  ! Show graphical bar for score for day and up/down tick
+    - Hover to get numerical score X.X per day
+! Replies page for users - show follow on comments on URL's user's have shared or commented on.
+  - Option to show /user/xxx sorted by popularity (not date of last comment) 
+  - Need "unfollow" capability to stop getting notified
+  - Plan:
+    - Use the most recent 100 comments by a user as their "following" list.
+    - Annotate Map with username (incl. anon) of most recent commenter (or comment seq #)
+    - Highlight all comments where last commenter is NOT yourself (or comment seq # > than user's comment)
+  - Create RSS feed - and instructions on getting mail for the feed (feedburner?)
+! Feature: New activity indicator in /user/xxx
+  - Annotate Map with username (incl. anon) of most recent commenter (or comment seq #)
+  - When viewing Info for a Map I've already commented on, update the dateViewed in that comment
+  - Highlight comments (yellow background?) that have recent COMMENTS later than my last dateViewed.
+- Reduce duplication of URL's
+  - www.* vs *
+  - upper/lower case differences
+  - use initially seen URL as canonical?
+! Star the info page (faster than leaving a comment - but puts it in your comment queue)
+  - Generate __fave comment
+  - Icons in user activity for Shared, Commented, Favorite/Watch/Follow, Wish List
+  - Custom RSS feed of favorited links (can all be in one page)
+  - Alternativly, "Follow" the infopage?
+  - Help users make live bookmarks?
+X Add thousands sep for counts in analytics (info, home, tags, user)
+  X Add as Django filter -> already exists in humanize!
+- Paging control for user activity pages
+  - Implement as month ranges
+  - Indicate in page header that older pages have NOT been updated (no need for crawlers to re-index)
+  - Links in home user activity page to named month ranges ("mckoss's activity for October 2008")
+  - Build efficient queries for all activity in a month - limit to 50 comments
+  - Potential for unreachable comments beyond 50 comments in any one month
+- Number of (and List of) "current" users
+  - Sliding window of unique user counts (by minute)
+  - show users in last 15 minutes as "current" (merge all windows)
+  - update calc once each minute - memcache
+- Marcelo feedback:
+  - One-click install in IE
+    - Look for IE Add to Favorites extension - window.external.AddFavorite(url, title)
+  - "How to use G02.ME" instead of "Install the Bookmarklet"
+    - Call to Action box - stand out (bigger type/box/color/graphics)
+  - Declutter the home page by moving "What is G02.me" to another page.
+- Enable users to make custom aliases
+    - if 6 characters or less prepend '~'
+    - slugify
+    - display aliases in info panel
+    - allow 3 aliases per URL
+- Polls
+- Pop-up alert to set nickname on anonymous commenting
+- Email notifications of watch list
+- Fix styling of head to have smooth clipping of left-hand block
+- Track Progeny of users
+  - Associate each user with a "parent" user id - first page view authored by....
+- Can I show top views each week for each user's shares?
+- Track one week half-life rates for each user (stored in cookies)
+    - share
+    - comment
+    - view
+    - home
+    - tag page view
+    - user page view
+    - Write old data to log only when user is > 1 week old (each week returning)
+- Deleting comment pre-populate comment box to allow edit and re-comment
+- Stemming of tags
+  - Tag aliases
+  - Tag rollup (aggregrate tags)
+! Delete comment from user page (including shared)
+- Fun tag animation (relative positioning)
+  - Home page tag clouds:
+  - Tags
+  - Users
+  - Domains
+- Move icons to left of created column
+- Save version 10 tag
+- Real-time commenting in side bar
+  - IFrame main page
+  - exponential backoff polling for visits, comments, etc.
+  - notification (sound) option on people entering/leaving the "room"
+  
+------------------------------------------------------------
+        PLATFORMS, SYNDICATION, IMPORT/EXPORT
+------------------------------------------------------------
+
+- Widget showing number of views and shares of the current url - click to share
+  - Need JSON call for lookup by url (but don't increase share count)
+  - Remove iframe if Go2.me widget is present on page!
+- Google Gadget
+- Mobile
+  - Bookmarklet?
+  - Simplified and smaller display (Marcelo)
+  - Test on iPhone, Windows Mobile, Blackberry, G1
+- AJAX not working on mobile
+  - G1
+  - Blackberry
+  - iPhone
+  - How to install bookmarklet on iPhone, G1, and Blackberry
+- Import bookmarks/faves
+- Sharing options
+  ! Twitter
+  - TwitterFeed
+  - Twhirl
+  - Friendfeed
+  - Faves
+  - MailTo
+- In-page JSCRIPT bookmaklet
+  - get metadata from page?  (description)
+  - get micro-formats from page
+! RSS feeds:
+  - user activity
+  - tags
+  - home(popular)
+  - user "favorites"
+  - user+tag
+  - use feedburner?
+  - make easy to get email update from feedburner (top page, and comments on user page)
+! Twitter features
+  ! User Profile Page - twitter info
+  - Anonymous twitter encrypted cookie
+  ! RSS Feed auto-twitter
+  X Claim your account button
+  - Allow claiming of account with pseudonomyous twitter user name
+  X Can put encryption key to decode twitter password in a cookie - ensures we don't
+    store an offline usable twitter password on the server
+    - key = H(sServerKey, username, password) - not stored on server- saved in cookie
+    - passStored = E(key, twitter-password)
+    - twitter-password = D(key, passStored)
+
+------------------------------------------------------------
+                    SECURITY AND PRIVACY
+------------------------------------------------------------
+
+- Link safety
+	- Per-user setting to open all URLs in info-mode
+	- Mark as spam/adult
+- Use google safebrowsing api to warn about viewing of unsafe urls
+X User account
+  X Claim a username by signing in
+  X Claim your account (provide google, twitter, or Go2.me password) - just Google now
+  X Require login to comment using a claimed username
+  X Protects your comments from being edited or deleted by others
+  - Just hide non-anonymous comments - based on vote threshold
+  - Ability to mark even claimed comments as "spam/bad"
+    - two (independent) votes will hide that comment from all but the author of the comment.
+  ! Mark URL as Spam - info-mode only AND prominently flagged as SPAM
+  ! Mark URL as Adult - require login and affirmation of over 18 and OK to view adult content
+  X Profile image
+  - Friend feed and twitter account info
+- Admin interface to block/throttle IP's, users, domains, referers
+- Spam - faked title - /3f
+X Google User Accounts
+  X Persistent cookie (30 days) in lieu of Google Auth
+
+------------------------------------------------------------
+                        PERFORMANCE
+------------------------------------------------------------
+
+- Shard counter(s) - pages, visitors
+- memcache
+  - info pages
+    - statistics (write through view counter)
+    - comments
+  X home page (keep for 60 seconds) - Adjust expires header
+  - tag pages (keep until url added to tag - age at 5 minutes)
+  X add a template tag that will auto-cache a page section - copy from Django 1.0
+X Install profiling to do performance testing and tuning
+! /user/x pages are too slow - optimize scoring queries?
+X Displaying comment counts in home page query has exceeded quota - CommentCount
+
+------------------------------------------------------------
+                          TESTING
+------------------------------------------------------------
+- Unit test invalid domain names are rejected
+
+------------------------------------------------------------
+                        MONETIZATION
+------------------------------------------------------------
+
+- Monetization
+  - AdSense
+  - Sponsored links (AdManager)
+  - PayPal donation (or GooglePayments)
+  - Premium membership
+    - Higher karma/scoring
+    - RSS Feeds (auto-Go2-ing)
+    - on-site badges and bolding of comments
+    - reserve nickname and prevent comment deletion
+- Private version on google apps for domains
+  - Partition database by domain
+
+------------------------------------------------------------
+      SITE ADMINISTRATION, MONITORING AND ANALYTICS
+------------------------------------------------------------
+
+- Error reporting
+  - Better tracking of backtrace in log files (even with DEBUG=False)
+  - Send email to admin account on unexpected failures
+! Integrate info page and frameset onto one page (IFRAME)
+  - One page for Google to crawl
+  - All links count to get info/content
+  - No more double counting analytics via /info
+  - Resizing/scrolling of info box
+- Analytics Pagetracking for goals
+  - /meta/username - client
+  - /meta/comment - client
+  - /meta/share - ??? server/deferred to next page ??? -> do all the same way!
+  - /meta/newuser - server
+  - SetVar for user state [base, comment, share, username]
+  - Any way to use GA for JSON call tracking?
+  - Use GA event tracking instead???
+- Setvar user partitioning
+  - "user" (as opposed to anon)
+  - "admin"
+  - "premium"
+  - OR - assign a composite "engagement" score and cluster 1 week half-life:
+    - Username: +10 points
+    - View: 1 point
+    - Share: 3 points
+    - Comment: 2 points
+    - Clustering:
+      0-5: Low
+      6-10: Medium
+      11-25: High
+      26-100: Very High
+      101+: Extremely High
+    - Store as compound value- last week's score, this week's score (cluster)
+      - e.g. None-Low or VeryHigh-High
+  - Use cookies for storage (no server-side session storage)
+- Site Administration
+	- Log when application is loaded
+	- Log when memcache is empty (does it ever empty?)
+- Site wide stats page:
+  - Use write-through rates (day/week/month/year)
+  - append /api when JSON call
+  - Creation of new user auth (first time visitor)
+  - Adoption of a Nickname
+  - Share
+  - Comment
+  - View
+  - Home page view
+  - Tag page view
+  - User page view
+  - Sign up for account
+  - Ping RSS feed for updates
+  - Tweet via RSS
+  - JSON calls (not from referrer {{host}})
+  - Send email notification
+! Don't log referer of domains from the bookmarklet use (analytics)
+  - When referer equals the url of the link - then it is a bookmarklet use
+! Event tracking
+  - (Category, Action, Label, Value):
+	  - (user, username/new-auth, [from-home, from-comment], [ip])
+	  - (load-times, home/user/tag, [tag]/[user], [ms])
+	  - (url, share/comment/view, [domain])
+	  - (error, error-code, message)
+! Don't track info pages but redirect to frameset when top?
+X Change .Age to Age filter on a date value
+
+------------------------------------------------------------
+                    MARKETING AND PR
+------------------------------------------------------------
+
+- A/B Testing on home page and header?  Google Website optimizer
+- G02.ME email accounts for admin email from address
+- Do screencast explaining what you can do with G02.ME
+- Link shortening competitive review [chris]
+  - blog post
+
+------------------------------------------------------------
+           CODE REFACTORING AND ARCHITECTURE
+------------------------------------------------------------
+
+- Centralize error messages and codes in one file
+- Document Hungarian for python/jscript doc
+- Code Refactoring
+	- Make ScoreSet not a Model - just globals
+	- break up comments, map, and globals into their own .py files
+- Move requser to req.usertrack
+  - Only req is stored in local
+- Move FinalResponse to context processor 
+- Fork thread to request pseudo-batch processing
+  - RSS feed checking
+  - Send email notifications
+- For limiting scoring on a single URL
+  - Change _FLimit to use a single memcache block with lists of the source authors
+    rather than one memchace per user * url combination
+
+------------------------------------------------------------
+                           BUGS
+------------------------------------------------------------
+
+X Anon sharing is throwing exception
+- Don't score anonymous views!
+! Is it possible to implement info/Close box so that currently navigated page is retained?
+  - See if window.location.href is accessible from parent frameset
+X Disallow 'http' as a username (mistake in posting links)
+X Truncate titles with elipses in views
+  - django filter
+- BUG: Share count should never be zero (even if not scoring)
+- Don't __share an item that's been shared by you previously (especially don't add duplicate comment entry)
+- Should limit comment scoring to one per user
+- Anonymous user is getting shared+1 and viewed+1...
+X Timeouts of AJAX calls (claim username) do not generate errors
+X Require that domains have a . in them to be valid (no intranet domains) 
+X Embedded links in comments need to target _top
+X Uneven margins in safari and Chrome.
+X Chrome table extends beyond the bounds of the page
+- Usernames are case sensitive - shouldn't be
+X Can share domains beginning with numbers! - http://www.3rivers.net/~cmac/index.html
+- Have to hit signout twice to sign out of account (first times out)
+- Losing username saved in cookie?
+- When logged in - can't over-ride switch to non-logged in account (e.g., "anon: foo") - unit test failure!

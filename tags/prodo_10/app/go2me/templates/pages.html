@@ -1,0 +1,73 @@
+{% extends "master.html" %}
+
+{% block script_includes %}
+<script type="text/javascript" src="http://shots.snap.com/ss/{{snapshots_code}}/snap_shots.js"></script>
+
+<!-- ClickTale Top part -->
+<script type="text/javascript">
+var WRInitTime=(new Date()).getTime();
+</script>
+<!-- ClickTale end of Top part -->
+{% endblock %}
+
+{% block script %}
+Go2.SetCSRF("{{csrf}}");
+
+var txtUsername;
+
+function Loaded()
+{
+	txtUsername = document.getElementById('username');
+	if (txtUsername)
+		{
+		txtUsername.focus();
+		Go2.AddEventFn(txtUsername, "keydown", KeyDown);
+		}
+
+	Go2.DisplayBars(200);
+}
+
+function KeyDown(evt)
+{
+	if (evt.keyCode == 13)
+		Go2.SetUsername(txtUsername.value);
+}
+{% endblock %}
+
+{% block body %}
+<div class="page">
+<div class="heading">
+{% if username %}
+	Welcome <a href="/user/{{username}}" title="{{username}}'s activity">{{username}}</a>
+	{% if profile %}
+		(<a href="/profile" title="{{username}}'s profile">Profile</a>)
+	{% else %}
+		(<a href="/profile" title="You nickname is temporary until you create a (free) account.">Create Account</a>)
+	{% endif %} |
+	<a href="/cmd/setusername?username=">Sign out</a>
+{% else %}
+	<div id="sign-in">
+	    <label for="username">Nickname: </label>
+	    <input maxlength="20" style="width:70px;" type="text" id="username" name="username"/>
+		<input onclick="Go2.SetUsername(txtUsername.value);" style="width:70px;" type="button" value="Set It"/>
+	</div>
+{% endif %}
+</div>
+
+{% block pagebody %}
+{% endblock %}
+
+<div class="timer"><span>Elapsed time: {{elapsed}}s</span></div>
+
+</div>
+{% endblock %}
+
+{% block page_end %}
+<!-- ClickTale Bottom part -->
+<div id="ClickTaleDiv" style="display: none;"></div>
+<script src="http://s.clicktale.net/WRb.js" type="text/javascript"></script>
+<script type="text/javascript">
+if(typeof ClickTale=='function') ClickTale(24739,0.225);
+</script>
+<!-- ClickTale end of Bottom part -->
+{% endblock %}
