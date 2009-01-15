@@ -266,7 +266,7 @@ Test({
 });
 }}}
 
-http://go2.me/comment/?id=G&comment=test:This%20is%20a%20test%20comment%20%5Bsearch%2C%20engine%5D&callback=Test&apikey=api~test~1~2009-01-01~E850C33E7F45ADB290F609D565A7C54BCBAB2166
+http://go2.me/comment/?id=G&comment=test:This%20is%20a%20test%20comment%20%5Bsearch%2C%20engine%5D&callback=Test&apikey=api~test~1~2009-12-31~44C09D058D6431E010734A8550D012B1435C2474
 
 Results:
 {{{
@@ -316,7 +316,7 @@ Test({
 });
 }}}
 
-http://go2.me/comment/delete?delkey=dk~6163~AA07EECB58B7129D89A451CEE2202529C7AB3D03&callback=Test&apikey=api~test~1~2009-01-01~E850C33E7F45ADB290F609D565A7C54BCBAB2166
+http://go2.me/comment/delete?delkey=dk~6163~AA07EECB58B7129D89A451CEE2202529C7AB3D03&callback=Test&apikey=api~test~1~2009-12-31~44C09D058D6431E010734A8550D012B1435C2474
 
 Results:
 {{{
