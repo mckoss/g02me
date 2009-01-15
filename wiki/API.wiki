@@ -25,7 +25,7 @@ Any request which writes data to the server additionally needs to supply an apik
 http://go2.me/...?callback=MyCallback&apikey=api~test~1~2009-12-31~44C09D058D6431E010734A8550D012B1435C2474
 }}}
 
-Note, the key show expires on Dec 31, 2009, and is limited to one request per minute.  It may be used for limited testing. If you want to use the Go2.me api, please send mail to apikey at go2.me.
+Note, the key shown expires on Dec 31, 2009, and is limited to one request per minute.  It may be used for limited testing. If you want to use the Go2.me api, please send mail to apikey at go2.me.
 
 == Concepts ==
 
