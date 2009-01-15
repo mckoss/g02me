@@ -266,7 +266,7 @@ Test({
 });
 }}}
 
-http://go2.me/comment/?id=G&comment=test:This%20is%20a%20test%20comment%20%5Bsearch%2C%20engine%5D&callback=Test&apikey=api~test~1~2009-12-31~44C09D058D6431E010734A8550D012B1435C2474
+http://go2.me/comment/?id=G&comment=test:This%20is%20a%20test%20comment%20%5Bsearch%2C%20engine%5D&callback=Test&apikey=api~test~1~2009-12-31~44C09D058D6431E010734A8550D012B1435C2474&force=true
 
 Results:
 {{{
