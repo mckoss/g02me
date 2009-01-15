@@ -22,10 +22,10 @@ secsResponse displays the number of seconds required on the server to respond to
 Any request which writes data to the server additionally needs to supply an apikey, e.g.:
 
 {{{
-http://go2.me/...?callback=MyCallback&apikey=api~test~1~2009-01-01~E850C33E7F45ADB290F609D565A7C54BCBAB2166
+http://go2.me/...?callback=MyCallback&apikey=api~test~1~2009-12-31~44C09D058D6431E010734A8550D012B1435C2474
 }}}
 
-Note, the key show expires on Jan 1, 2009, and is limited to one request per minute.  It may be used for limited testing. If you want to use this api, please send mail to apikey at go2.me.
+Note, the key show expires on Dec 31, 2009, and is limited to one request per minute.  It may be used for limited testing. If you want to use the Go2.me api, please send mail to apikey at go2.me.
 
 == Concepts ==
 
