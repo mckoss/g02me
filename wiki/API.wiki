@@ -27,11 +27,13 @@ http://go2.me/...?callback=MyCallback&apikey=api~test~1~2009-12-31~44C09D058D643
 
 Note, the key shown expires on Dec 31, 2009, and is limited to one request per minute.  It may be used for limited testing. If you want to use the Go2.me api, please send mail to apikey at go2.me.
 
+You can also use the init
+
 == Concepts ==
 
 Go2.me stores shortened URL's and collects analytics information about user interactions with them.  Each shortened URL is assigned an _id_ (which is encoded as a base-55 number using digits, and upper and lower case letters).
 
-=== UR Info Format ===
+=== URL Info Format ===
 
 Each URL has the following information that can be retrieved about it:
 
@@ -98,7 +100,8 @@ When a Failure status code is returned, the property, 'message', may contain a h
 == Methods ==
 
 || *URL* || *Description* || *Returns* ||
-|| / || Retrieve the set of (100) most popular urls || {popular:[url_info, ...]} ||
+|| / || Retrieve the set of (up to 50) most popular urls || {popular:[url_info, ...]} ||
+|| /init/ || Retrieve an API key for use in subsequent calls to Go2.me ||
 || /info/id || Retrieve information about a shortened URL id. || url_info ||
 || /map/?url=...&title=... || Generate a shorted URL from a long one. || url_info ||
 || /comment/?id=xxx&comment=text-string || Add a comment to the URL with id, xxx || url_info ||
@@ -106,6 +109,12 @@ When a Failure status code is returned, the property, 'message', may contain a h
 || /cmd/setusername?username=xxx || Set the current user's nickname (or clear it if the 'username' parameter is missing ||
 
 == Examples ==
+
+http://go2.me/init/?callback=Test
+
+Results:
+{{{
+}}}
 
 http://go2.me/cmd/setusername?username=test&callback=Test
 
