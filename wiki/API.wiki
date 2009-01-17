@@ -101,7 +101,7 @@ When a Failure status code is returned, the property, 'message', may contain a h
 
 || *URL* || *Description* || *Returns* ||
 || / || Retrieve the set of (up to 50) most popular urls || {popular:[url_info, ...]} ||
-|| /init/ || Retrieve an API key for use in subsequent calls to Go2.me ||
+|| /init/ || Retrieve an API key for use in subsequent calls to Go2.me || {apikey:...} ||
 || /info/id || Retrieve information about a shortened URL id. || url_info ||
 || /map/?url=...&title=... || Generate a shorted URL from a long one. || url_info ||
 || /comment/?id=xxx&comment=text-string || Add a comment to the URL with id, xxx || url_info ||
