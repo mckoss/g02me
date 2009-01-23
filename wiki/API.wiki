@@ -38,6 +38,7 @@ Go2.me stores shortened URL's and collects analytics information about user inte
 Each URL has the following information that can be retrieved about it:
 
   * url: The _long_ URL
+  * urlShort: The _short_ URL (e.g. http://go2.me/G)
   * id: The base-55 identifier for the shortened URL
   * title: The page title
   * created: Date url was first shortened
