@@ -229,10 +229,18 @@ Results:
 {{{
 Test({
     "status": "OK", 
-    "created": new Date("10/18/2008 16:26 GMT"), 
-    "url": "http://code.google.com/p/g02me/wiki/API", 
+    "secsResponse": "0.15", 
     "title": "API - g02me - Google Code", 
+    "url": "http://code.google.com/p/g02me/wiki/API", 
+    "created": new Date("10/18/2008 16:26 GMT"), 
     "comments": [
+        {
+            "comment": "Just updated the API to use an api key and rate thottling", 
+            "delkey": "dk~7232~831D6F9F0FAD773E48673A9BE2D7E2938F09CD53", 
+            "created": new Date("11/17/2008 19:26 GMT"), 
+            "user": "mckoss", 
+            "tags": "security,go2me,api"
+        }, 
         {
             "comment": "", 
             "delkey": "dk~3023~678881DA8D8FA81369F51701A57AF1EF59463A45", 
@@ -266,19 +274,23 @@ Test({
         }
     ], 
     "tags": [
+        "api", 
         "g02me", 
+        "go2me", 
         "python", 
+        "security", 
         "tinyurl"
     ], 
     "scores": {
-        "week": 0.061282271195171684, 
-        "month": 0.054505052482993734, 
-        "day": 0.14110924810270739, 
-        "year": 0.0095228319607937404
+        "week": 0.055869114435496241, 
+        "month": 0.028691556794165341, 
+        "day": 0.20155765447100918, 
+        "year": 0.010469887802562347
     }, 
-    "shared": 10, 
+    "shared": 15, 
+    "urlShort": "http://go2.me/1g", 
     "id": "1g", 
-    "viewed": 48
+    "viewed": 55
 });
 }}}
 
