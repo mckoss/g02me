@@ -223,7 +223,7 @@ Test({
 });
 }}}
 
-http://go2.me/map/?url=http://code.google.com/p/g02me/wiki/API&title=Edit%20API-g02me&callback=Test
+http://go2.me/map/?url=http://code.google.com/p/g02me/wiki/API&title=Edit%20API-g02me&callback=Test&apikey=api~test~1~2009-12-31~44C09D058D6431E010734A8550D012B1435C2474
 
 Results:
 {{{
