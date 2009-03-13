@@ -1,0 +1,100 @@
+{% extends "pages.html" %}
+{% load humanize %}
+{% load custom %}
+{% block subTitle %}{{usernamePage}}'s shared links{% endblock %}
+
+{% block script %}
+Go2.Init("{{username}}", "{{csrf}}");
+
+var txtUsername;
+
+function Loaded()
+{
+	txtUsername = document.getElementById('username');
+	if (txtUsername)
+		{
+		txtUsername.focus();
+		Go2.AddEventFn(txtUsername, "keydown", KeyDown);
+		}
+
+	Go2.DisplayBars(200);
+}
+
+function KeyDown(evt)
+{
+	if (evt.keyCode == 13)
+		Go2.SetUsername(txtUsername.value);
+}
+{% endblock %}
+
+{% block page-heading-extra %}
+	<a href="/user/{{usernamePage}}/picture_full"><img class="profile-med" src="/user/{{usernamePage}}/picture_med"></a>
+{% endblock %}
+{% block page-heading %}{{usernamePage}}'s shared links{% endblock %}
+{% block page-subheading %}
+	{{profilePage.sFullname|escape}}
+	{% if profilePage.sLocation %}({{profilePage.sLocation|escape}}){% endif %}
+{% endblock %}
+
+{% block pagebody %}
+
+{% if profilePage.sAbout or profilePage.urlHome %}
+	<div class="about">
+		{% if profilePage.urlHome %}
+			Home page: <a href="{{profilePage.urlHome|escape}}">{{ profilePage.urlHome|escape }}</a><br/>
+		{% endif %}
+		{{profilePage.sAbout|escape|urlize}}
+	</div>
+{% else %}{% if profilePage.sFullname %}
+	<div style="text-align:center;" class="about">
+		<b>{{profilePage.sFullname|escape}}</b>
+	</div>
+{% endif %}{% endif %}
+
+<table class="scores">
+<tr><th>Title</th><th>Visitors</th><th>Commenters</th><th>Created</th><th>Scores</th></tr>
+{% for comment in comments %}
+	<tr>
+		<td class="title"><div>
+			<img class="favicon" src="http://{{comment.map.Domain}}/favicon.ico">
+			<a target="_blank" href="/{{comment.map.GetId}}" title="{{comment.map.url|escape}}">{{comment.map.title|escape}}</a>
+		{% if comment.comment or comment.tags %}<div class="table-comments"><p>
+			{% ifequal comment.comment "__share" %}
+				<i>Shared</i>
+			{% else %}{% ifequal comment.comment "__fave" %}
+				<i>Favorited</i>
+			{% else %}
+				{{comment.comment|escape|urlize}}
+			{% endifequal %}{% endifequal %}
+			{% if comment.tags %}
+	    		[{% for tag in comment.TagList %}<a target="_top" href="/tag/{{tag}}">{{tag|escape}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}]
+	    	{% endif %}
+	    	- <i>{{ comment.dateCreated|Age }}</i>
+	    	{% if comment.AllowDelete %}
+    			<img class="x" onclick="Go2.DeleteComment('{{comment.DelKey}}');" src="/images/x.png"/>
+    		{% endif %}
+	    	</p></div>
+	    {% endif %}
+		</div></td>
+		<td class="num">{{comment.map.viewCount|intcomma}}</td>
+		<td class="num">{{comment.map.CommentCount|intcomma}}</td>
+		<td class="age">
+			{% if comment.map.Creator %}
+				{% ifnotequal usernamePage comment.map.Creator %}
+				<a href="/user/{{comment.map.Creator}}">
+					<img class="inline" src="/user/{{comment.map.Creator}}/picture_thumb"></a>
+				{% endifnotequal %}
+				<a href="/user/{{comment.map.Creator}}">{{comment.map.Creator}}</a> -
+			{% endif %}
+			{{comment.map.dateCreated|Age}}
+		</td>
+		{% with comment.map.ScoresNamed.day as scoreDay %}
+		<td class="bar-td"><div class="bar-holder">
+			<div class="bar" bar_value="{{scoreDay|mult:24|floatformat:1}}"
+				 title="{{scoreDay|mult:24|floatformat:1}} points per day">&nbsp;</div>
+		 </div></td>
+		{% endwith %}
+	</tr>
+{% endfor %}
+</table>
+{% endblock %}

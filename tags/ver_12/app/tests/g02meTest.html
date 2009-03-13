@@ -1,0 +1,694 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Go2.me Unit Tests</title>
+<script src="unit.js"></script>
+<script src="/scripts/g02me.js"></script>
+<script src="firebug/firebugx.js"></script>
+</head>
+<body onload="ts.Run();ts.Report();">
+<h1><script>document.write(document.title);</script></h1>
+
+<script>
+var ts = new UT.TestSuite();
+ts.DWOutputDiv();
+
+// API Keys signed with the default (local) secret key (will not work on hosted Go2.me)
+var sAPIKey = "api~test~120~2010-01-01~1060232359B7C42E6E1B3063CCE84497501C3099";
+var sAPIKeyExpired = "api~test~10~2008-01-01~51B2192FF5481272A0031774B41259EA51D728F7";
+var sAPIKeySlow = "api~test-slow~1~2010-01-01~D434157843F1A7742C9BADB27A673BBB749A3D81";
+
+ts.AddTest("Map", function(ut)
+{
+	var objInit;
+	
+	ut.AsyncSequence([
+	    function(ut)
+		    {
+		    new Go2.ScriptData("/cmd/setusername").Call({username:"test", apikey:sAPIKey}, function(obj) {
+			    ut.AssertContains(obj, {status:"OK", username:"test"});
+			    ut.NextFn();
+		    	});
+		    },
+		function(ut)
+			{
+			new Go2.ScriptData("/map/").Call({url:"http://google.com", apikey:sAPIKey}, function(obj) {
+				ut.AssertContains(obj, {status:"OK", url:"http://google.com/", title:"http://google.com/"});
+				ut.AssertGT(obj.scores.day, 0);
+				ut.AssertType(obj.created, Date);
+				objInit = obj;
+				ut.NextFn();
+				});
+			},
+		function(ut)
+			{
+			new Go2.ScriptData("/map/").Call({url:"http://google.com?id=2", apikey:sAPIKey}, function(obj) {
+				ut.AssertContains(obj, {status:"OK", url:"http://google.com/?id=2", title:"http://google.com/?id=2"});
+				ut.AssertNEq(obj.id, objInit.id);
+				ut.NextFn();
+				});
+			},
+		function(ut)
+			{
+			new Go2.ScriptData("/lookup/").Call({url:"http://google.com", apikey:sAPIKey}, function(obj) {
+				ut.AssertContains(obj,
+					{status:"OK", url:"http://google.com/", id:objInit.id, viewed:objInit.viewed, shared:objInit.shared});
+				ut.NextFn();
+				});
+			},
+		function(ut)
+			{
+			new Go2.ScriptData("/map/").Call({url:"http://google.com", apikey:sAPIKey}, function(obj) {
+				ut.AssertContains(obj,
+					{status:"OK", url:"http://google.com/", id:objInit.id, viewed:objInit.viewed, shared:objInit.shared});
+				ut.NextFn();
+				});
+			},
+		function(ut)
+			{
+			new Go2.ScriptData("/map/").Call({url:"google.com", apikey:sAPIKey}, function(obj) {
+				ut.AssertContains(obj,
+					{status:"OK", url:"http://google.com/", id:objInit.id, viewed:objInit.viewed, shared:objInit.shared});
+				ut.NextFn();
+				});
+			},
+		function(ut)
+			{
+			new Go2.ScriptData("/map/").Call({url:" http://google.com ", apikey:sAPIKey}, function(obj) {
+				ut.AssertContains(obj,
+					{status:"OK", url:"http://google.com/", id:objInit.id, viewed:objInit.viewed, shared:objInit.shared});
+				console.log(1,objInit.viewed);
+				ut.NextFn();
+				});
+			},
+		function(ut)
+			{
+			var frame = document.createElement("iframe");
+			frame.src = "/" + objInit.id;
+			frame.style.width = "800px";
+			document.body.appendChild(frame);
+			tm = new UT.Timer(ut.NextFn.FnMethod(ut), 500).Active(true);
+			},
+		function(ut)
+			{
+			new Go2.ScriptData("/map/").Call({url:"http://google.com", apikey:sAPIKey}, function(obj) {
+				ut.AssertContains(obj,
+					{status:"OK", url:"http://google.com/", id:objInit.id, viewed:objInit.viewed, shared:objInit.shared});
+				console.log(2, objInit.viewed);
+				ut.NextFn();
+				});
+			},
+		function(ut)
+			{
+			new Go2.ScriptData("/map/").Call({url:"https://google.com", apikey:sAPIKey}, function(obj) {
+				ut.AssertContains(obj,
+					{status:"OK", url:"https://google.com/"});
+				ut.NextFn();
+				});
+			}
+		]);
+}).Async(true, 15000);
+
+ts.AddTest("Errors", function(ut)
+{
+	ut.AsyncSequence([
+		function (ut)
+			{
+			new Go2.ScriptData("/map/").Call({url:"", apikey:sAPIKey}, function (obj) {
+				ut.AssertContains(obj, {status:"Fail"});
+				ut.NextFn();
+				});
+			},
+		function (ut)
+			{
+			new Go2.ScriptData("/map/").Call({url:"http://g02.me", apikey:sAPIKey}, function (obj) {
+				ut.AssertContains(obj, {status:"Warning/Domain"});
+				ut.NextFn();
+				});
+			},
+		function (ut)
+			{
+			new Go2.ScriptData("/map/").Call({url:"http://www.g02.me", apikey:sAPIKey}, function (obj) {
+				ut.AssertContains(obj, {status:"Warning/Domain"});
+				ut.NextFn();
+				});
+			},
+		function (ut)
+			{
+			new Go2.ScriptData("/map/").Call({url:"http://G02.ME", apikey:sAPIKey}, function (obj) {
+				ut.AssertContains(obj, {status:"Warning/Domain"});
+				ut.NextFn();
+				});
+			},
+		function (ut)
+			{
+			new Go2.ScriptData("/map/").Call({url:"http://www.tinyurl.com", apikey:sAPIKey}, function (obj) {
+				ut.AssertContains(obj, {status:"Fail/Domain"}, "www.tinyurl.com");
+				ut.NextFn();
+				});
+			},
+		function (ut)
+			{
+			new Go2.ScriptData("/map/").Call({url:"script://google.com", apikey:sAPIKey}, function (obj) {
+				ut.AssertContains(obj, {status:"Fail"});
+				ut.NextFn();
+				});
+			},
+		function(ut)
+			{
+			new Go2.ScriptData("/lookup/").Call({url:"http://nosuchurl.com", apikey:sAPIKey}, function(obj) {
+				ut.AssertContains(obj, {status:"Fail/NotFound"});
+				ut.NextFn();
+				});
+			}
+		]);
+}).Async(true);
+
+ts.AddTest("Info", function(ut)
+{
+	var objInit;
+
+	ut.AsyncSequence([
+		function(ut)
+			{
+			new Go2.ScriptData("/map/").Call({url:"http://google.com", apikey:sAPIKey}, function(obj) {
+				ut.AssertContains(obj, {status:"OK", url:"http://google.com/"});
+				objInit = obj;
+				ut.NextFn();
+				});
+			},
+		function (ut)
+			{
+			new Go2.ScriptData("/" + objInit.id).Call({apikey:sAPIKey}, function (obj) {
+				ut.AssertContains(obj, {status:"OK", url:"http://google.com/"});
+				ut.NextFn();
+				});
+			},
+		function (ut)
+			{
+			new Go2.ScriptData("/9999").Call({apikey:sAPIKey}, function (obj) {
+				ut.AssertContains(obj, {status:"Fail/NotFound"});
+				ut.NextFn();
+				});
+			}
+		]);
+}).Async(true);
+
+ts.AddTest("Comment", function(ut)
+{
+	var objInit;
+	var cComment;
+	var com;
+	var com2;
+	var tagUniq;
+
+
+	sCSRF = Go2.GetCookies()['userAuth'];
+	mpCSRF = sCSRF.match(/^uid~(.+)~[0-9A-F]+$/);
+	ut.Assert(mpCSRF && mpCSRF[1], "Missing User Auth Cookie");
+	sCSRF = mpCSRF[1];
+
+	ut.AsyncSequence([
+		function(ut) // 1
+			{
+			new Go2.ScriptData("/map/").Call({url:"http://google.com", apikey:sAPIKey}, function(obj) {
+				ut.AssertContains(obj, {status:"OK", url:"http://google.com/"});
+				objInit = obj;
+				ut.NextFn();
+				});
+			},
+		function(ut) // 2
+			{
+			new Go2.ScriptData("/comment/").Call({id:objInit.id, comment:"hello"}, ut.FnWrap(function (obj) {
+				ut.AssertContains(obj, {status:"Fail/Auth/api"});
+				ut.NextFn();
+				}));
+			},
+		function(ut) // 3
+			{
+			new Go2.ScriptData("/comment/").Call({id:objInit.id, comment:"hello", apikey:sAPIKeyExpired}, ut.FnWrap(function (obj) {
+				ut.AssertContains(obj, {status:"Fail/Auth/api"});
+				ut.NextFn();
+				}));
+			},
+		function(ut) // 4
+			{
+			new Go2.ScriptData("/comment/").Call({id:objInit.id, comment:"hello", apikey:sAPIKey}, ut.FnWrap(function (obj) {
+				ut.AssertContains(obj, {status:"OK", url:"http://google.com/"});
+				var cT = obj.comments.length;
+				ut.AssertContains(obj.comments[cT-1], {comment:"hello"});
+				cComment = obj.comments.length;
+				ut.NextFn();
+				}));
+			},
+		function(ut) // 5
+			{
+			new Go2.ScriptData("/" + objInit.id).Call({apikey:sAPIKey}, function (obj) {
+				ut.AssertContains(obj, {status:"OK", url:"http://google.com/"});
+				var cT = obj.comments.length;
+				ut.AssertContains(obj.comments[cT-1], {comment:"hello"});
+				ut.AssertEq(obj.comments.length, cComment);
+				ut.NextFn();
+				});
+			},
+		function(ut) // 6
+			{
+			new Go2.ScriptData("/comment/").Call({id:objInit.id, comment:"hello2", csrf:sCSRF}, ut.FnWrap(function (obj) {
+				ut.AssertContains(obj, {status:"OK", url:"http://google.com/"});
+				var cT = obj.comments.length;
+				ut.AssertContains(obj.comments[cT-1], {comment:"hello2"});
+				cComment = obj.comments.length;
+				dateHello = obj.comments[cComment-1].created;
+				ut.NextFn();
+				}));
+			},
+		function(ut) // 7
+			{
+			new Go2.ScriptData("/comment/").Call({id:objInit.id, force: true, comment:"test :  This is a test  [  ,,tag1,  tag2]", apikey:sAPIKey}, function (obj) {
+				ut.AssertContains(obj, {status:"OK", url:"http://google.com/"});
+				var cT = obj.comments.length;
+				ut.AssertContains(obj.comments[cT-1], {comment:"This is a test", tags:["tag1","tag2"], user:"test"});
+				ut.AssertType(obj.comments[cT-1].created, Date);
+				ut.AssertEq(obj.comments.length, cComment+1);
+				ut.AssertContains(obj.tags, ["tag1", "tag2"]);
+				ut.NextFn();
+				});
+			},
+		function(ut) // 8
+			{
+			new Go2.ScriptData("/" + objInit.id).Call({csrf:sCSRF}, function (obj) {
+				ut.AssertContains(obj, {status:"OK", url:"http://google.com/"});
+				var cT = obj.comments.length;
+				ut.AssertEq(cT, cComment+1);
+				com = obj.comments[cT-1];
+				ut.AssertContains(com, {comment:"This is a test", user:"test", tags:["tag1","tag2"]});
+				ut.NextFn();
+				});
+			},
+		function(ut) // 9 (since)
+			{
+			new Go2.ScriptData("/" + objInit.id).Call({since:dateHello, csrf:sCSRF}, function (obj) {
+				ut.AssertContains(obj, {status:"OK", url:"http://google.com/"});
+				ut.AssertEq(obj.comments.length, 1);
+				ut.AssertContains(obj.comments[0], {comment:"This is a test", user:"test", tags:["tag1","tag2"]});
+				ut.NextFn();
+				});
+			},
+		function(ut) // 10
+			{
+			tagUniq = "dm-" + Math.floor(Math.random()*1000);
+			new Go2.ScriptData("/comment/").Call({id:objInit.id, force: true, comment:"test :  [" + tagUniq + "]", apikey:sAPIKey}, ut.FnWrap(function (obj) {
+				ut.AssertContains(obj, {status:"OK", url:"http://google.com/"});
+				var cT = obj.comments.length;
+				ut.AssertContains(obj.comments[cT-1], {comment:"", user:"test", tags:[tagUniq]});
+				com2= obj.comments[cT-1];
+				ut.AssertEq(obj.comments.length, cComment+2);
+				ut.AssertContains(obj.tags, ["tag1", "tag2", tagUniq]);
+				ut.NextFn();
+				}));
+			},
+		function(ut) // 11
+			{
+			new Go2.ScriptData("/comment/delete").Call({cid:com2.cid}, ut.FnWrap(function(obj) {
+				ut.AssertContains(obj, {status: "Fail/Auth/api"});
+				ut.NextFn();
+				}));
+			},
+		function(ut) // 12
+			{
+			new Go2.ScriptData("/comment/delete").Call({delkey:com2.delkey, apikey:sAPIKey}, ut.FnWrap(function(obj) {
+				ut.AssertEq(obj.comments.length, cComment+1);
+				for (var i = 0; i < obj.tags.length; i++)
+					ut.AssertNEq(obj.tags[i], tagUniq);
+				ut.NextFn();
+				}));
+			},
+		function(ut) // 13
+			{
+			new Go2.ScriptData("/comment/delete").Call({delkey:com.delkey, apikey:sAPIKey}, function(obj) {
+				ut.AssertEq(obj.comments.length, cComment);
+				ut.NextFn();
+				});
+			},
+		function(ut) // 14
+			{
+			new Go2.ScriptData("/" + objInit.id).Call({apikey:sAPIKey}, function (obj) {
+				ut.AssertContains(obj, {status:"OK", url:"http://google.com/"});
+				ut.AssertEq(obj.comments.length, cComment);
+				ut.NextFn();
+				});
+			},
+		function(ut) // 15
+			{
+			new Go2.ScriptData("/comment/").Call({id:objInit.id, apikey:sAPIKey, comment:"__illegal"}, ut.FnWrap(function (obj) {
+				ut.AssertContains(obj, {status:"Fail"});
+				ut.NextFn();
+				}));
+			},
+		function(ut) // 16
+			{
+			var sHTMLChallenge = "&\"'<" + "script>alert(1);<" + "/script>";
+			var sHTMLQuoted = Go2.EscapeHTML(sHTMLChallenge);
+			new Go2.ScriptData("/comment/").Call({id:objInit.id, apikey:sAPIKey, comment:sHTMLChallenge}, ut.FnWrap(function(obj) {
+				var cT = obj.comments.length;
+				ut.AssertContains(obj.comments[cT-1], {comment:sHTMLChallenge, commentHTML:sHTMLQuoted});
+				ut.NextFn();
+				}));
+			}
+		]);
+}).Async(true, 15000);
+
+ts.AddTest("Unicode", function(ut)
+{
+	var objInit;
+	var cComment;
+	var chUnicode = String.fromCharCode(0xe9);
+
+	ut.AsyncSequence([
+		function(ut)
+			{
+			new Go2.ScriptData("/map/").Call({url:"http://google.com/uc", apikey:sAPIKey}, function(obj) {
+				ut.AssertContains(obj, {status:"OK", url:"http://google.com/uc"});
+				objInit = obj;
+				ut.NextFn();
+				});
+			},
+		function(ut)
+			{
+			new Go2.ScriptData("/comment/").Call({id:objInit.id, comment:"Unicode " + chUnicode, apikey:sAPIKey}, ut.FnWrap(function (obj) {
+				ut.AssertContains(obj, {status:"OK"});
+				ut.AssertContains(obj.comments[0], {comment:"Unicode " + chUnicode});
+				ut.NextFn();
+				}));
+			},
+		function(ut)
+			{
+			new Go2.ScriptData("/comment/").Call({id:objInit.id, comment:"Unicode Tag [tag-" + chUnicode + "]", apikey:sAPIKey}, ut.FnWrap(function (obj) {
+				ut.AssertContains(obj, {status:"OK"});
+				var cT = obj.comments.length;
+				// No Unicode allowed in tags - will be stripped
+				ut.AssertContains(obj.comments[cT-1], {comment:"Unicode Tag", tags:["tag"]});
+				ut.AssertEq(obj.tags[0], "tag");
+				ut.NextFn();
+				}));
+			}
+		]);
+}).Async(true);
+
+ts.AddTest("Popular", function(ut)
+{
+	ut.AsyncSequence([
+		function(ut)
+			{
+			new Go2.ScriptData("/popular/").Call({}, ut.FnWrap(function(obj) {
+				ut.AssertContains(obj, {status:"OK"});
+				ut.Assert(obj.pages.length > 0, "non-empty popular list");
+				var url = obj.pages[0];
+				for (var prop in {day:0,week:0,month:0,year:0})
+					ut.AssertGT(url.scores[prop], 0, prop);
+				ut.NextFn();
+				}));
+			}
+		]);
+}).Async(true);
+
+ts.AddTest("User", function(ut)
+{
+	ut.AsyncSequence([
+		function(ut)
+			{
+			// BUG: Because of security for running unitTest, assume default account
+			// is test@example.com -> hence despite setusername call, users name is test
+			// and not "test".
+			new Go2.ScriptData("/user/test").Call({}, ut.FnWrap(function(obj) {
+				ut.AssertContains(obj, {status:"OK"});
+				ut.AssertType(obj.urls, Array);
+				ut.Assert(obj.urls.length > 0, "non-empty user list");
+				ut.NextFn();
+				}));
+			}
+		]);
+}).Async(true);
+
+ts.AddTest("Tag", function(ut)
+{
+	var objInit;
+
+	ut.AsyncSequence([
+		function(ut)
+			{
+			new Go2.ScriptData("/lookup/").Call({url:"http://google.com"}, function(obj) {
+				ut.AssertContains(obj, {status:"OK", url:"http://google.com/"});
+				objInit = obj;
+				ut.NextFn();
+				});
+			},
+		function(ut)
+			{
+			new Go2.ScriptData("/comment/").Call({id:objInit.id, comment:"Testing tags [, ,search,, multi word]", apikey:sAPIKey}, function (obj) {
+				ut.AssertContains(obj, {status:"OK", url:"http://google.com/"});
+				var cT = obj.comments.length;
+				ut.AssertGT(cT, 0);
+				ut.AssertContains(obj.comments[cT-1], {comment:"Testing tags", tags: ["search","multi-word"]});
+				ut.AssertContains(obj.tags, ["multi-word", "search"]); 
+				ut.NextFn();
+				});
+			},
+		function(ut)
+			{
+			new Go2.ScriptData("/tag/search").Call({}, ut.FnWrap(function (obj) {
+				ut.AssertContains(obj, {status:"OK"});
+				ut.AssertType(obj.pages, Array);
+				ut.AssertGT(obj.pages.length, 0);
+				ut.NextFn();
+				}));
+			},
+		function(ut)
+			{
+			new Go2.ScriptData("/tag/no-such-tag").Call({}, ut.FnWrap(function (obj) {
+				ut.AssertContains(obj, {status:"OK"});
+				ut.AssertType(obj.pages, Array);
+				ut.AssertEq(obj.pages.length, 0);
+				ut.NextFn();
+				}));
+			}
+		]);
+}).Async(true, 5000);
+
+ts.AddTest("Favorite", function(ut)
+{
+	var objInit;
+
+	ut.AsyncSequence([
+		function(ut)
+			{
+			new Go2.ScriptData("/lookup/").Call({url:"http://google.com"}, function(obj) {
+				ut.AssertContains(obj, {status:"OK", url:"http://google.com/"});
+				objInit = obj;
+				ut.NextFn();
+				});
+			},
+		function(ut)
+			{
+			new Go2.ScriptData("/toggle-favorite/").Call({id:objInit.id, apikey:sAPIKey}, function (obj) {
+				ut.AssertContains(obj, {status:"OK", url:"http://google.com/", favorite:!objInit.favorite});
+				ut.NextFn();
+				});
+			}
+		]);
+}).Async(true, 5000);
+
+ts.AddTest("Ban", function(ut)
+{
+	// Confirm we can ban a link:
+	// - We can get info on it, but it does not appear in a tag view
+	// - It's scores are reset to 0
+	// - It can not get additional scores by commenting on it (stays at 0)
+	// - When we unban it, it can acrue scores via comments
+	var objInit;
+	var urlUniq = "http://mckoss.com/" + Math.floor(Math.random()*1000);
+	var cTagged;
+
+	ut.AsyncSequence([
+		function(ut)
+			{
+			new Go2.ScriptData("/map/").Call({url:urlUniq, apikey:sAPIKey}, function(obj) {
+				ut.AssertContains(obj, {status:"OK"});
+				objInit = obj;
+				ut.NextFn();
+				});
+			},
+		function(ut)
+			{
+			new Go2.ScriptData("/comment/").Call({id:objInit.id, comment:"[adult]", apikey:sAPIKey}, ut.FnWrap(function (obj) {
+				ut.AssertContains(obj, {status:"OK"});
+				ut.NextFn();
+				}));
+			},
+		function(ut)
+			{
+			new Go2.ScriptData("/tag/adult").Call({}, ut.FnWrap(function(obj) {
+				ut.AssertContains(obj, {status:"OK"});
+				ut.Assert(obj.pages.length > 0, "non-empty tag list");
+				cTagged = obj.pages.length;
+				var url = obj.pages[0];
+				for (var prop in {day:0,week:0,month:0,year:0})
+					ut.AssertGT(url.scores[prop], 0, prop);
+				ut.NextFn();
+				}));
+			},
+		function(ut)
+			{
+			new Go2.ScriptData("/admin/ban-id").Call({id:objInit.id, fBan:true, apikey:sAPIKey}, function(obj) {
+				ut.AssertContains(obj, {status:"OK"});
+				ut.NextFn();
+				});
+			},
+		function(ut)
+			{
+			new Go2.ScriptData("/tag/adult").Call({}, ut.FnWrap(function(obj) {
+				ut.AssertContains(obj, {status:"OK"});
+				ut.AssertEq(obj.pages.length, cTagged-1);
+				ut.NextFn();
+				}));
+			},
+		function (ut)
+			{
+			new Go2.ScriptData("/" + objInit.id).Call({apikey:sAPIKey}, function (obj) {
+				ut.AssertContains(obj, {status:"OK"});
+				for (var prop in {day:0,week:0,month:0,year:0})
+					ut.AssertEq(obj.scores[prop], undefined, prop);
+				ut.NextFn();
+				});
+			},
+		function(ut)
+			{
+			new Go2.ScriptData("/admin/ban-id").Call({id:objInit.id, fBan:false, apikey:sAPIKey}, function(obj) {
+				ut.AssertContains(obj, {status:"OK"});
+				ut.NextFn();
+				});
+			},
+		function(ut)
+			{
+			new Go2.ScriptData("/comment/").Call({id:objInit.id, comment:"some score", apikey:sAPIKey}, ut.FnWrap(function (obj) {
+				ut.AssertContains(obj, {status:"OK"});
+				ut.NextFn();
+				}));
+			},
+		function(ut)
+			{
+			new Go2.ScriptData("/tag/adult").Call({}, ut.FnWrap(function(obj) {
+				ut.AssertContains(obj, {status:"OK"});
+				ut.AssertEq(obj.pages.length, cTagged);
+				ut.NextFn();
+				}));
+			},
+		function (ut)
+			{
+			new Go2.ScriptData("/" + objInit.id).Call({apikey:sAPIKey}, function (obj) {
+				ut.AssertContains(obj, {status:"OK"});
+				for (var prop in {day:0,week:0,month:0,year:0})
+					ut.AssertGT(obj.scores[prop], 0, prop);
+				ut.NextFn();
+				});
+			}
+		]);
+}).Async(true, 15000);
+
+ts.AddTest("Client API Key", function(ut)
+{
+	var sClientKey;
+	
+	ut.AsyncSequence([
+		function(ut)
+  			{
+  			new Go2.ScriptData("/init/").Call({}, function(obj) {
+  				ut.AssertContains(obj, {status:"OK"});
+  				ut.AssertType(obj.apikey, "string");
+  				sClientKey = obj.apikey;
+  				ut.NextFn();
+  				});
+  			},
+  		function(ut)
+			{
+			new Go2.ScriptData("/map/").Call({url:"http://unique.com", apikey:sClientKey}, function(obj) {
+				ut.AssertContains(obj, {status:"OK", url:"http://unique.com/"});
+				ut.NextFn();
+				});
+			},     			
+		function(ut)
+			{
+			new Go2.ScriptData("/map/").Call({url:"http://unique.com", apikey:sClientKey+"x"}, function(obj) {
+				ut.AssertContains(obj, {status:"Fail/Auth/api"});
+				ut.NextFn();
+				});
+			}              	
+    	]);
+}).Async(true);
+
+ts.AddTest("Throttle Writes", function(ut)
+{
+	var objInit;
+
+	ut.AsyncSequence([
+  		function(ut)
+  			{
+  			new Go2.ScriptData("/map/").Call({url:"http://google.com", apikey:sAPIKey}, function(obj) {
+  				ut.AssertContains(obj, {status:"OK", url:"http://google.com/"});
+  				objInit = obj;
+  				ut.NextFn();
+  				});
+  			},
+  		function(ut)
+	  		{
+  		  	new Go2.ScriptData("/admin/flush-memcache").Call({apikey:sAPIKey}, function(obj) {
+  		  		ut.AssertContains(obj, {status:"OK"});
+  		  		ut.NextFn();
+  		  		});
+	  		},
+  		function(ut)
+  			{
+  	  		var sd = new Go2.ScriptData("/comment/");
+  	  		var iCallsMax = 5;
+  	  		var iCalls = iCallsMax;
+  	  		var iErrors = 0;
+
+  	  		Repeat();
+
+  	  		function Repeat()
+  	  			{
+	  			sd.Call({id:objInit.id, comment:"hello", apikey:sAPIKeySlow}, ut.FnWrap(function (obj) {
+		  			iCalls--;
+		  			if (obj.status != "OK")
+			  			{
+			  			ut.AssertEq(obj.status, "Fail/Busy/write");
+			  			iErrors++;
+			  			}
+		  			if (iCalls == 0)
+			  			{
+			  			ut.Assert(iErrors >= 1 && iErrors < iCallsMax, "Should fail some - but not all - calls: " + iErrors);
+			  			ut.Async(false);
+			  			return;
+			  			}
+		  			Repeat();
+	  				}));
+  	  			}
+  			}
+  		]);
+}).Async(true, 10000);
+
+ts.AddTest("Call", function(ut)
+{
+	ut.AsyncSequence([
+    	function(ut)
+    		{
+    		new Go2.ScriptData("http://google.com").Call({}, function(obj) {
+        		ut.AssertContains(obj, {status: "Fail/Timeout"});
+    			ut.NextFn();
+    		});
+    		}
+		]);
+}).Async(true, 16000);
+
+</script>
+</body>

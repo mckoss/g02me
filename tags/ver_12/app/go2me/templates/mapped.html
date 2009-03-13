@@ -1,0 +1,180 @@
+{% extends "master.html" %}
+{% load humanize %}
+{% load custom %}
+
+{% block subTitle %}{{map.title|escape}}{% endblock %}
+
+{% block script %}
+// Google Ad Manager
+Go2.Init("{{username}}", "{{csrf}}");
+Go2.map = {{map.JSON|JSON}};
+
+try
+	{
+	GA_googleAddSlot("{{ad_publisher_id}}", "map-bottom");
+	GA_googleFetchAds();
+	}
+catch (e) {}
+
+function Loaded()
+{
+	Go2.MapLoaded();
+}
+
+{% endblock %}
+
+{% block body %}
+<div id="title" class="title">
+	<a target="_top" href="/" title="{{site_name}} Home | Popular Pages">
+		<img class="title-logo" src="/images/title-logo.png"/>
+	</a>
+	<a href="{{map.Href}}" title="Close Frame"><div class="close-box"></div></a>
+	
+	<div class="title-account">
+	{% if username %}
+		<div style="margin-top: 4px;">
+			<a href="/user/{{username}}" title="{{username}}'s activity">{{username}}</a>
+			{% if profile %}
+				(<a href="/profile/" title="{{username}}'s profile">Profile</a>)
+			{% else %}
+				(<a href="/profile/" title="Your nickname is temporary until you create a (free) account.">Create Account</a>)
+			{% endif %} |
+			<a href="#" onclick="Go2.SetUsername('');return false;">Sign out</a>
+		</div>
+	{% else %}
+		<div id="sign-in">
+		    <label for="username">Nickname: </label>
+		    <input maxlength="20" style="width:70px;" type="text" id="username" name="username"/>
+			<input onclick="Go2.SetUsername(Go2.parts['username'].value);return false;" style="width:70px;" type="button" value="Set It"/>
+		</div>
+	{% endif %}
+	</div>
+
+	<p class="link">
+		<span id="linkLabel">Link</span>:
+		<a onclick="Go2.ResetFrame();return false;" href="{{map.Href}}" alt="{{map.title|escape}}" title="{{map.title|escape}}">
+			{{map.url|escape}}
+		</a>
+	</p>
+</div>
+
+<div id="info" class="info">
+
+	<!-- Statistics Panel -->
+	<div id="stats-panel" class="panel">
+		<div class="expander expanded"></div>
+		<div style="position:relative;" class="panel-body">
+			<div href="#" onclick="Go2.ToggleFavorite();return false;" id="favorite" class="open-star" title="Make Link a Favorite"></div>
+			<div class="creator">
+			{% if map.Creator %}
+				<a href="/user/{{map.Creator}}">
+					<img class="profile-med" src="/user/{{map.Creator}}/picture_med">
+				</a><br/>
+				<a href="/user/{{map.Creator}}">{{map.Creator}}</a>
+			{% else %}
+				<img class="profile-med" src="/images/picture_med.png">
+			{% endif %}
+			</div>
+			<div class="content">
+				<p>Created: {{map.dateCreated|Age}}</p>
+				<p>Visitors: <span id="visitors">{{map.Uniques|intcomma}}</span></p>
+				<!--  <p>S:{{map.shareCount}}, V:{{map.viewCount}}, C:{{map.commentCount}}</p> --> 
+				<p>Tags: 
+				{% for tag in TopTags %}
+					<a target="_top" href="/tag/{{tag}}" title="Recently popular | {{tag}}">{{tag|escape}}</a>{% if not forloop.last %}, {% endif %}
+				{% endfor %}
+				</p>
+			</div>
+			<div style="margin: 5px 5px 2px 0;text-align:right;">
+				{% if is_admin %}
+					<a href="#" onclick="Go2.BanishId('{{map.GetId}}', '{{map.Banished}}'=='False'); return false;">{% if map.Banished%}Un-{% endif %}Ban</a>
+				{% endif %}
+			</div>
+			<div style="margin: 5px 5px 2px 0;text-align:right;">
+			<!-- 
+				<img class="clickable" onclick="Go2.TogglePrivate('{{map.GetId}}', '{{username}}');return false;" id="private-image" src="/images/lock_open.png">
+			-->
+				<a href="mailto:?subject=Go2.me at {{map.title|escape}}&body=I've shared a link with you at http://{{site_host}}/{{map.GetId}}"
+				   title="Send Link by Email">
+					<img src="/images/email.png">
+				</a>
+				<a target="_blank"
+				   href="http://www.facebook.com/share.php?u=http://{{site_host}}/{{map.GetId}}"
+				   onclick="Go2.FacebookShare('http://{{site_host}}/{{map.GetId}}', '{{map.title|escape}}');return false;"
+				   title="Share Link on Facebook">
+					<img src="/images/facebook.png">
+				</a>
+				<a target="_blank"
+				   href="http://twitter.com/home?source={{twitter_source}}&status={{map.TweetText}}"
+				   title="Share Link on Twitter">
+					<img src="/images/twitter-logo.png">
+				</a>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Chat/Comments Panel -->
+	<div id="chat-panel" class="panel">
+		<div class="panel-header">
+			<div class="expander expanded"></div>
+			<span id="chat-title">Chat</span>
+		</div>
+		<div class="panel-body">
+			<div class="presence" id="presence">
+			</div>
+			<div class="divider-h"></div>
+			<!-- Public comments (only) are dumped in page for search engines -->
+			<div id="comments" class="comments">
+				{% for comment in map.Comments %}
+				<p id="cmt_{{comment.ID}}">
+			    {% if comment.username %}<a target="_blank" href="/user/{{comment.username}}" title="{{comment.username}}'s activity">{{comment.username}}</a>:{% endif %}
+			    {{comment.comment|escape|urlizecomment}}
+			    {% if comment.tags %}
+			    	[{% for tag in comment.TagList %}<a onclick="return Go2.LoadFrame('/tag/{{tag}}');" href="/tag/{{tag}}" title="{{tag}} pages">{{tag}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}]
+			    {% endif %}
+			    - <span class="server-time" go2_ms="{{comment.dateCreated|MSJavascript}}">{{ comment.dateCreated|Age }}</span>
+			    {% if comment.AllowDelete %}
+			    <img class="x" onclick="Go2.DeleteComment({{comment.ID}}, '{{comment.DelKey}}');" src="/images/x.png"/>
+			    {% endif %}
+			    </p>
+				{% endfor %}
+			</div>
+			
+			<div id="comment-form" class="comment-form">
+				<div class="divider-h"></div>
+				<textarea id="comment" class="comment" tabindex="2"></textarea>
+				<input onclick="Go2.PostComment();return false;" type="button" value="Post" tabindex="3"/>
+				<p style="clear:left;" class="help">Comment format: "nickname: text of your comment [tag1, tag2, ...]"</p>
+			</div>
+		</div>
+	</div>
+
+	<!-- Sponsor Panel -->
+	<div id="sponsor-panel" class="panel">
+		<div class="panel-header">
+			<div onclick="Go2.TogglePanel('sponsor-panel');return false;" class="expander expanded"></div>
+			Sponsored By
+		</div>
+		<div class="panel-body">
+			<div style="height:250px">
+				<script>try {GA_googleFillSlot("map-bottom");} catch (e) {}</script>
+			</div>
+			<div style="text-align:center;">
+				<a href="http://code.google.com/p/g02me/wiki/AboutUs">About {{site_name}}</a> |
+				<a href="http://blog.go2.me">Blog</a> |
+				<a href="http://getsatisfaction.com/g02me/products/g02me_g02me">Feedback</a>
+			</div>
+		</div>
+	</div>
+
+</div> <!-- info sidebar -->
+
+<div id="border-v" style="position:absolute;top:32px;left:300px;height:3000px;" class="border-v"></div>
+
+<div id="content">
+	<iframe id="content-iframe" name="content-frame" src="{{map.Href}}"/>
+		Your browser does not support frames.  You can visit the page, "" by clicking this link
+		<a href="{{map.Href}}" alt="{{map.title|escape}}" title="{{map.title|escape}}">{{map.title|escape}}</a>.
+	</iframe>
+</div>
+{% endblock %}
