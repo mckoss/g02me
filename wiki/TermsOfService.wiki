@@ -21,7 +21,7 @@
   * The [http://code.google.com/appengine/privacy.html Google App Engine Privacy Policy] and [http://www.google.com/privacypolicy.html Google Privacy Policy] is included by reference in this agreement.
   * !StartPad will have access to your user name and email address if you register with the Service.
   * !StartPad will have access to all information provided by you to the service.
-  * When !StartPad collects email addresses, IP addresses, or personal passwords in conjunction with the use of the Service, it will not disclose this information with any 3rd party without your prior consent.
+  * Email addresses will not disclosed to any 3rd party without your prior consent.
 
 == Fees ==
 
