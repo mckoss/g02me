@@ -1,0 +1,62 @@
+{% extends "pages.html" %}
+{% load humanize %}
+{% load custom %}
+{% block subTitle %}Popular {{tag}} links{% endblock %}
+
+{% block script %}
+Go2.Init("{{username}}", "{{csrf}}");
+
+var txtUsername;
+
+function Loaded()
+{
+	txtUsername = document.getElementById('username');
+	if (txtUsername)
+		{
+		txtUsername.focus();
+		Go2.AddEventFn(txtUsername, "keydown", KeyDown);
+		}
+
+	Go2.DisplayBars(200);
+}
+
+function KeyDown(evt)
+{
+	if (evt.keyCode == 13)
+		Go2.SetUsername(txtUsername.value);
+}
+{% endblock %}
+
+{% block page-heading %}Popular {{tag}} links{% endblock %}
+{% block page-subheading %}
+	Add "[{{tag}}]" to the end of a comment to include your link here.
+{% endblock %}
+
+{% block pagebody %}
+
+<table class="scores">
+<tr><th>Title</th><th>Visits</th><th>Comments</th><th>Created</th><th>Score</th></tr>
+{% for page in pages %}
+	<tr>
+		<td class="title"><div>
+			<img class="favicon" src="http://{{page.Domain}}/favicon.ico">
+			<a target="_blank" href="/{{page.GetId}}" title="{{page.url|escape}}">{{page.title|escape}}</a>
+		</div></td>
+		<td class="num">{{page.viewCount|intcomma}}</td>
+		<td class="num">{{page.CommentCount|intcomma}}</td>
+		<td class="age"><div>
+			{% if page.Creator %}
+				<a href="/user/{{page.Creator}}">
+					<img class="inline" src="/user/{{page.Creator}}/picture_thumb"></a>
+				<a href="/user/{{page.Creator}}">{{page.Creator}}</a> -
+			{% endif %}
+			{{page.dateCreated|Age}}
+		</div></td>
+		<td class="bar-td"><div class="bar-holder">
+			<div class="bar" bar_value="{{page.timescore|floatformat:1}}"
+				 title="{{page.timescore|floatformat:1}} points per day">&nbsp;</div>
+		</div></td>
+	</tr>
+{% endfor %}
+</table>
+{% endblock %}
